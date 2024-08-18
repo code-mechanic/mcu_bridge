@@ -9,4 +9,4 @@
 4. Push the docker image to github using below command
    * `docker push ghcr.io/code-mechanic/microchip_pic_mcu_family:latest`
 5. Create and run a new container from an image. If image is not present then it will automatically do pull.
-   * `docker run ghcr.io/code-mechanic/microchip_pic_mcu_family:latest`
+   * `docker run -it ghcr.io/code-mechanic/microchip_pic_mcu_family:latest`
