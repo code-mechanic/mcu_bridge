@@ -47,8 +47,3 @@ ENV PATH="/opt/microchip/xc8/v${XC8_VERSION}/bin:${PATH}"
 
 # Set default command
 CMD ["/bin/bash"]
-
-RUN mkdir -p /home/user_pic
-WORKDIR /home/user_pic
-COPY entrypoint.sh ./
-RUN chmod +x entrypoint.sh
