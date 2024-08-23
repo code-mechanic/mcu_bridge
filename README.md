@@ -1,4 +1,4 @@
-# microchip_pic_mcu_family
+# PIC SDK
 
 SDK for PIC microcontrollers
 
