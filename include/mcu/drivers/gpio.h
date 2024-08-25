@@ -43,6 +43,9 @@ typedef enum GPIO_PinIdx_et_
 
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
+#define GPIO_WHICH_PORT(pinId)                     ((pinId) / GPIO_PIN_PER_PORT)
+#define GPIO_WHICH_PIN(pinId)                      ((pinId) % GPIO_PIN_PER_PORT)
+
 /* Exported functions ------------------------------------------------------- */
 status_et GPIO_SetPinDirection(GPIO_PinIdx_et pin, GPIO_PinDir_et dir);
 status_et GPIO_GetPinDirection(GPIO_PinIdx_et pin, GPIO_PinDir_et* pDir);

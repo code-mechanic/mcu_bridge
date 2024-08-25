@@ -5,9 +5,6 @@
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
-#define GPIO_WHICH_PORT(pinId)                     ((pinId) / GPIO_PIN_PER_PORT)
-#define GPIO_WHICH_PIN(pinId)                      ((pinId) % GPIO_PIN_PER_PORT)
-
 /* Private variables ---------------------------------------------------------*/
 /* Private function prototypes -----------------------------------------------*/
 static bool_et isGPIO_PinIdxValid(GPIO_PinIdx_et pin);
