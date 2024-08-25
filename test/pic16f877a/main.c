@@ -9,8 +9,9 @@
 #pragma config WRT = OFF        // Flash Program Memory Write Enable bits (Write protection off; all program memory may be written to by EECON control)
 #pragma config CP = OFF         // Flash Program Memory Code Protection bit (Code protection off)
 
-#include <gpio.h>
 #include <common.h>
+#include <gpio.h>
+#include <delay.h>
 
 void main()
 {
@@ -18,5 +19,6 @@ void main()
     retVal = GPIO_SetPinDirection(P_C1, GPIO_PIN_OUTPUT);
     while(1) {
         GPIO_PinToggle(P_C1);
+        DelayMs(500);
     }
 }

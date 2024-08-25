@@ -22,6 +22,10 @@ SRC_PATH += test/$(PIC_SDK_MCU)
 INC_PATH += include
 INC_PATH += include/mcu/config
 INC_PATH += include/mcu/drivers
+INC_PATH += source/common_drivers/dispatch
+
+# List of supported MCU by SDK
+PIC_SDK_MCU_SUPPORT_LIST += pic16f877a
 
 ##########################
 # Compiler configuration #

@@ -22,5 +22,5 @@ status_et GPIO_DispatchPinToggle(GPIO_PinIdx_et pin);
 }
 #endif
 
-#endif /* TEMPLATE_H */
+#endif /* GPIO_DISPATCH_H */
 

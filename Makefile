@@ -1,6 +1,11 @@
 include config/docker_config.mk
 include config/build_config.mk
 
+# Check if PIC_SDK_MCU is one of the supported MCU values
+ifeq ($(filter $(PIC_SDK_MCU), $(PIC_SDK_MCU_SUPPORT_LIST)),)
+	$(error PIC_SDK_MCU is not a valid value. Expected $(PIC_SDK_MCU_SUPPORT_LIST))
+endif
+
 INC_FLAGS = $(addprefix -I, $(INC_PATH))
 SRC_FILES = $(foreach path, $(SRC_PATH), $(wildcard $(path)/*.c))
 OBJS := $(subst $(SRC_FILES),$(BUILD_PATH),$(SRC_FILES:.c=.p1))
@@ -9,8 +14,11 @@ OBJ_FILES := $(notdir $(OBJS))
 # Help message
 .PHONY: help
 help:
-	@echo $(OBJS)
-	@echo $(OBJ_FILES)
+	@echo List of source file to be compile
+	@echo
+	@for src_file in $(SRC_FILES); do \
+		echo "$$src_file ..."; \
+	done
 
 # Build the SDK
 .PHONY: build_sdk

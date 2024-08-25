@@ -1,5 +1,5 @@
 /* Includes ------------------------------------------------------------------*/
-#include <pic16f877a.h>
+#include <xc.h>
 #include <gpio_dispatch.h>
 #include <regctrl.h>
 
