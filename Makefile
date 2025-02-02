@@ -36,8 +36,8 @@ $(BUILD_PATH):
 	@mkdir -p $(BUILD_PATH)
 
 # Build the Docker image
-.PHONY: build_docker
-build_docker:
+.PHONY: docker_build
+docker_build:
 	@docker build -t $(DOCKER_PATH) ./docker
 
 # Start the Docker build container and / or update tools
@@ -56,6 +56,14 @@ docker_stop:
 	@docker stop $(CONTAINER)$(QUIET)
 	@docker rm $(CONTAINER)$(QUIET)
 	@docker image rm $(DOCKER_PATH)$(QUIET)
+
+# Check docker image and container
+.PHONY: docker_check
+docker_check:
+	@echo "\e[36mIMAGE LIST:\e[0m"
+	@docker image ls
+	@echo "\e[36mCONTAINER LIST:\e[0m"
+	@docker container ls
 
 # Show current build options
 .PHONY: showcfg
