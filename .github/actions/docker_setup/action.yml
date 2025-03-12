@@ -1,0 +1,25 @@
+name: Docker Setup
+description: Docker login and start pic_sdk_builder container
+
+inputs:
+  github_token:
+    description: 'Github Token for Docker Login'
+    required: true
+    default: ${{ secrets.GITHUB_TOKEN }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Docker Login
+      shell: bash
+      run: echo "${{ inputs.github_token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+    - name: Check Docker Info
+      shell: bash
+      run: |
+        docker info
+        docker images
+
+    - name: Run Docker Image
+      shell: bash
+      run: make docker_start
