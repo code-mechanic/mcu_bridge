@@ -1,3 +1,4 @@
+/* clang-format off */
 #pragma warning disable 520,1498
 // CONFIG
 #pragma config FOSC = HS        // Oscillator Selection bits (HS oscillator)
@@ -8,6 +9,7 @@
 #pragma config CPD = OFF        // Data EEPROM Memory Code Protection bit (Data EEPROM code protection off)
 #pragma config WRT = OFF        // Flash Program Memory Write Enable bits (Write protection off; all program memory may be written to by EECON control)
 #pragma config CP = OFF         // Flash Program Memory Code Protection bit (Code protection off)
+/* clang-format on */
 
 #include <common.h>
 #include <gpio.h>

@@ -14,8 +14,8 @@ static volatile uint8_t* GPIO_getPortReg(GPIO_PinIdx_et pin);
 /* Public functions  ---------------------------------------------------------*/
 status_et GPIO_DispatchSetPinDirection(GPIO_PinIdx_et pin, GPIO_PinDir_et dir)
 {
-    status_et retVal = SUCCESS;
-    volatile uint8_t  *directionReg = NULL;
+    status_et         retVal       = SUCCESS;
+    volatile uint8_t* directionReg = NULL;
 
     directionReg = GPIO_getDirectionReg(pin);
 
@@ -41,21 +41,19 @@ status_et GPIO_DispatchSetPinDirection(GPIO_PinIdx_et pin, GPIO_PinDir_et dir)
 
 status_et GPIO_DispatchGetPinDirection(GPIO_PinIdx_et pin, GPIO_PinDir_et* pDir)
 {
-    status_et retVal = SUCCESS;
-    volatile uint8_t *directionReg = NULL;
-    uint8_t directionRegVal;
+    status_et         retVal       = SUCCESS;
+    volatile uint8_t* directionReg = NULL;
+    uint8_t           directionRegVal;
 
     directionReg = GPIO_getDirectionReg(pin);
 
-    if(directionReg)
-    {
+    if(directionReg) {
         directionRegVal = BIT_Read(*directionReg, GPIO_WHICH_PIN(pin));
     } else {
         retVal = FAILED;
     }
 
-    if(retVal == SUCCESS)
-    {
+    if(retVal == SUCCESS) {
         /**
          * In PIC16F877A,
          * Input  = 1
@@ -73,8 +71,8 @@ status_et GPIO_DispatchGetPinDirection(GPIO_PinIdx_et pin, GPIO_PinDir_et* pDir)
 
 status_et GPIO_DispatchPinWrite(GPIO_PinIdx_et pin, GPIO_PinVal_et val)
 {
-    status_et retVal = SUCCESS;
-    volatile uint8_t *dataOutReg = NULL;
+    status_et         retVal     = SUCCESS;
+    volatile uint8_t* dataOutReg = NULL;
 
     dataOutReg = GPIO_getPortReg(pin);
 
@@ -89,12 +87,12 @@ status_et GPIO_DispatchPinWrite(GPIO_PinIdx_et pin, GPIO_PinVal_et val)
 
 status_et GPIO_DispatchPinRead(GPIO_PinIdx_et pin, GPIO_PinVal_et* pVal)
 {
-    status_et retVal = SUCCESS;
-    volatile uint8_t *dataOutReg = NULL;
-    uint8_t dataOutRegVal;
-    
+    status_et         retVal     = SUCCESS;
+    volatile uint8_t* dataOutReg = NULL;
+    uint8_t           dataOutRegVal;
+
     dataOutReg = GPIO_getPortReg(pin);
-    
+
     if(dataOutReg) {
         dataOutRegVal = BIT_Read(*dataOutReg, GPIO_WHICH_PIN(pin));
     } else {
@@ -104,7 +102,7 @@ status_et GPIO_DispatchPinRead(GPIO_PinIdx_et pin, GPIO_PinVal_et* pVal)
     if(retVal == SUCCESS) {
         if(dataOutRegVal == 1U) {
             *pVal = GPIO_PIN_HIGH;
-        } else if (dataOutRegVal == 0U) {
+        } else if(dataOutRegVal == 0U) {
             *pVal = GPIO_PIN_LOW;
         }
     }
@@ -114,11 +112,11 @@ status_et GPIO_DispatchPinRead(GPIO_PinIdx_et pin, GPIO_PinVal_et* pVal)
 
 status_et GPIO_DispatchPinToggle(GPIO_PinIdx_et pin)
 {
-    status_et retVal = SUCCESS;
-    volatile uint8_t *dataOutReg = NULL;
-    
+    status_et         retVal     = SUCCESS;
+    volatile uint8_t* dataOutReg = NULL;
+
     dataOutReg = GPIO_getPortReg(pin);
-    
+
     if(dataOutReg) {
         BIT_Toggle(*dataOutReg, GPIO_WHICH_PIN(pin));
     } else {
@@ -131,42 +129,41 @@ status_et GPIO_DispatchPinToggle(GPIO_PinIdx_et pin)
 /* Private functions ---------------------------------------------------------*/
 static volatile uint8_t* GPIO_getDirectionReg(GPIO_PinIdx_et pin)
 {
-    volatile uint8_t *directionReg = NULL;
+    volatile uint8_t* directionReg = NULL;
 
-    switch(GPIO_WHICH_PORT(pin))
-    {
+    switch(GPIO_WHICH_PORT(pin)) {
 #if defined(TRISA)
         case 0:
-        directionReg = (uint8_t*)&TRISA;
-        break;
+            directionReg = (uint8_t*) &TRISA;
+            break;
 #endif
 
 #if defined(TRISB)
         case 1:
-        directionReg = (uint8_t*)&TRISB;
-        break;
+            directionReg = (uint8_t*) &TRISB;
+            break;
 #endif
-        
+
 #if defined(TRISC)
         case 2:
-        directionReg = (uint8_t*)&TRISC;
-        break;
+            directionReg = (uint8_t*) &TRISC;
+            break;
 #endif
-        
+
 #if defined(TRISD)
         case 3:
-        directionReg = (uint8_t*)&TRISD;
-        break;
+            directionReg = (uint8_t*) &TRISD;
+            break;
 #endif
 
 #if defined(TRISE)
         case 4:
-        directionReg = (uint8_t*)&TRISE;
-        break;
+            directionReg = (uint8_t*) &TRISE;
+            break;
 #endif
 
         default:
-        break;
+            break;
     }
 
     return directionReg;
@@ -174,42 +171,41 @@ static volatile uint8_t* GPIO_getDirectionReg(GPIO_PinIdx_et pin)
 
 static volatile uint8_t* GPIO_getPortReg(GPIO_PinIdx_et pin)
 {
-    volatile uint8_t *dataOutReg = NULL;
+    volatile uint8_t* dataOutReg = NULL;
 
-    switch(GPIO_WHICH_PORT(pin))
-    {
+    switch(GPIO_WHICH_PORT(pin)) {
 #if defined(PORTA)
         case 0:
-        dataOutReg = (uint8_t*)&PORTA;
-        break;
+            dataOutReg = (uint8_t*) &PORTA;
+            break;
 #endif
 
 #if defined(PORTB)
         case 1:
-        dataOutReg = (uint8_t*)&PORTB;
-        break;
+            dataOutReg = (uint8_t*) &PORTB;
+            break;
 #endif
-        
+
 #if defined(PORTC)
         case 2:
-        dataOutReg = (uint8_t*)&PORTC;
-        break;
+            dataOutReg = (uint8_t*) &PORTC;
+            break;
 #endif
-        
+
 #if defined(PORTD)
         case 3:
-        dataOutReg = (uint8_t*)&PORTD;
-        break;
+            dataOutReg = (uint8_t*) &PORTD;
+            break;
 #endif
 
 #if defined(PORTE)
         case 4:
-        dataOutReg = (uint8_t*)&PORTE;
-        break;
+            dataOutReg = (uint8_t*) &PORTE;
+            break;
 #endif
 
         default:
-        break;
+            break;
     }
 
     return dataOutReg;
