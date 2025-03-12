@@ -3,13 +3,14 @@
 #define REGCTRL_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
+/* clang-format off */
 #define BIT_Mask(bitpos)                                       (1U << (bitpos))
 #define BIT_MaskFill(bitpos)                          (BIT_Mask((bitpos)) - 1U)
 #define BIT_Set(reg, bitpos)                     ((reg) |=  BIT_Mask((bitpos)))
@@ -38,7 +39,7 @@
 #define REG_RightShift(val, bitpos)                         ((val) >> (bitpos))
 #define REG_Modify(reg, setmask, clearmask)                                   \
              REG_Write((reg), (((REG_Read(reg)) & (~(clearmask))) | (setmask)))
-
+/* clang-format on */
 /* Exported functions ------------------------------------------------------- */
 
 #ifdef __cplusplus

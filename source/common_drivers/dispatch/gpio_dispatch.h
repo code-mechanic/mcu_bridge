@@ -2,7 +2,7 @@
 #define GPIO_DISPATCH_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -23,4 +23,3 @@ status_et GPIO_DispatchPinToggle(GPIO_PinIdx_et pin);
 #endif
 
 #endif /* GPIO_DISPATCH_H */
-

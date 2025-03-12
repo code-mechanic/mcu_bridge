@@ -2,7 +2,7 @@
 #define GPIO_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -10,27 +10,25 @@
 
 /* Exported types ------------------------------------------------------------*/
 
-typedef enum GPIO_PinDir_et_
-{
-  GPIO_PIN_INPUT = 0,
-  GPIO_PIN_OUTPUT
+typedef enum GPIO_PinDir_et_ {
+    GPIO_PIN_INPUT = 0,
+    GPIO_PIN_OUTPUT
 } GPIO_PinDir_et;
 
-typedef enum GPIO_PinVal_et_
-{
-  GPIO_PIN_LOW = 0,
-  GPIO_PIN_HIGH
+typedef enum GPIO_PinVal_et_ {
+    GPIO_PIN_LOW = 0,
+    GPIO_PIN_HIGH
 } GPIO_PinVal_et;
 
-typedef enum GPIO_PortIdx_et_
-{
-  GPIO_PORT0 = 0,
-  GPIO_PORT1,
-  GPIO_PORT2,
-  GPIO_PORT3,
-  GPIO_PORT4,
+typedef enum GPIO_PortIdx_et_ {
+    GPIO_PORT0 = 0,
+    GPIO_PORT1,
+    GPIO_PORT2,
+    GPIO_PORT3,
+    GPIO_PORT4,
 } GPIO_PortIdx_et;
 
+/* clang-format off */
 typedef enum GPIO_PinIdx_et_
 {
   P_A0 = GPIO_PIN_PER_PORT * GPIO_PORT0, P_A1, P_A2, P_A3, P_A4, P_A5, P_A6, P_A7, P_A8, P_A9, P_A10, P_A11, P_A12, P_A13, P_A14, P_A15,
@@ -40,11 +38,12 @@ typedef enum GPIO_PinIdx_et_
   P_E0 = GPIO_PIN_PER_PORT * GPIO_PORT4, P_E1, P_E2, P_E3, P_E4, P_E5, P_E6, P_E7, P_E8, P_E9, P_E10, P_E11, P_E12, P_E13, P_E14, P_E15,
   P_NC = 0xff
 } GPIO_PinIdx_et;
+/* clang-format on */
 
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
-#define GPIO_WHICH_PORT(pinId)                     ((pinId) / GPIO_PIN_PER_PORT)
-#define GPIO_WHICH_PIN(pinId)                      ((pinId) % GPIO_PIN_PER_PORT)
+#define GPIO_WHICH_PORT(pinId) ((pinId) / GPIO_PIN_PER_PORT)
+#define GPIO_WHICH_PIN(pinId)  ((pinId) % GPIO_PIN_PER_PORT)
 
 /* Exported functions ------------------------------------------------------- */
 status_et GPIO_SetPinDirection(GPIO_PinIdx_et pin, GPIO_PinDir_et dir);

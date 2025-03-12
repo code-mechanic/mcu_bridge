@@ -2,7 +2,7 @@
 #define TEMPLATE_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -20,4 +20,3 @@ void DelayUs(uint32_t delayUs);
 #endif
 
 #endif /* TEMPLATE_H */
-

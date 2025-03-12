@@ -2,7 +2,7 @@
 #define COMMON_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
@@ -11,21 +11,21 @@
 
 /* Exported types ------------------------------------------------------------*/
 typedef enum bool_et_ {
-  FALSE = 0,
-  TRUE
+    FALSE = 0,
+    TRUE
 } bool_et;
 
-typedef enum status_et_{
-  FAILED = 0,
-  SUCCESS,
-  BUSY,
-  TIMEOUT
+typedef enum status_et_ {
+    FAILED = 0,
+    SUCCESS,
+    BUSY,
+    TIMEOUT
 } status_et;
 
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
-#define DISABLE                                                             (0U)
-#define ENABLE                                                              (1U)
+#define DISABLE (0U)
+#define ENABLE  (1U)
 
 /* Exported functions ------------------------------------------------------- */
 
@@ -34,4 +34,3 @@ typedef enum status_et_{
 #endif
 
 #endif /* COMMON_H */
-
