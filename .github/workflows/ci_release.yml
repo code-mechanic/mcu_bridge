@@ -1,0 +1,107 @@
+# ~~~
+# Github CI workflow to Create & Publish release package for a product
+#
+# PREREQUISITES:-
+# ``````````````
+# 1. Tag the repo with a valid release tag.
+#     i.e., in the format `PIC_SDK_<PRODUCT>_<MM.mm.pp.bb>`
+#     For example,
+#      PIC_SDK_PIC16F877A_MCU_00.93.00.01
+#      00(MM) - Major Version
+#      93(MM) - Minor Version
+#      00(pp) - Patch Version
+#      01(bb) - Build Number
+#
+# STEPS TO TRIGGER THIS WORKFLOW:-
+# ```````````````````````````````
+# 1. Open PIC SDK GitHub and go to `Actions` tab
+#    (OR https://github.com/code-mechanic/pic_sdk/actions)
+#
+# 2. Click on `PIC SDK CI Release` under `All Workflows` in the left pane
+#    (OR https://github.com/code-mechanic/pic_sdk/actions/workflows/ci_release.yml)
+#
+# 3. Click on `Run workflow` dropdown button on the right end of following message
+#    `This workflow has a workflow_dispatch event trigger.`
+#
+# 4. In the dialog box, provide various inputs for this workflow as well as the workflow branch:-
+#
+#    a. `Use workflow from` -> This SHOULD be `Branch: main`
+#        - Do NOT update this to any other branch or tag.
+#        - This is NOT the branch or tag for the release to be made,
+#          instead its the branch or tag from which the workflow yml file should be picked.
+#        - This is useful only if you are an author of this workflow yml file and
+#          you would like to test latest updates made to this file before merging to main branch.
+#
+#    b. `PIC SDK HW / Product` -> Select the product for which you wish to create the release
+#
+#    c. `Release Version (MM.mm.pp.bb)` -> Provide the version to release
+#        - This should match the `VERSION` that you have used to create the tag.
+#          For example,
+#           Use `00.93.00.01` to create release from the tag `PIC_SDK_PIC16F877A_00.93.00.01`
+#           when `pic16f877a_mcu` is chosen as `PIC SDK HW / Product`.
+#        - NOTE: The workflow will fail if `PIC_SDK_<PRODUCT>_<VERSION>` tag doesn't exist in the repo.
+#                This is case sensitive.
+#        - NOTE: The workflow will fail if a GitHub release already exists for the tag
+#                `PIC_SDK_<PRODUCT>_<VERSION>`
+#
+#    d. `Release Type` ->
+#       - Choose `pre-release` for Release Candidates (RC) [Default]
+#         - GitHub releases will mark this release as `Pre-release`
+#       - Choose `final-release` for the Final Release.
+#         - GitHub releases would mark this release as `Latest` based on release date or semantic version.
+#
+# GITHUB RELEASE:-
+# ```````````````
+# Once this workflows runs to completion without failures, GitHub release for the product from the tag is ready.
+#
+# - Open `Release` in the right pane of PIC SDK GitHub home page to view the release
+#   (OR https://github.com/code-mechanic/pic_sdk/releases)
+#   - NOTE: Pre-releases are listed below after all final-releases.
+#
+# - Release Link: https://github.com/code-mechanic/pic_sdk/releases/tag/PIC_SDK_<PRODUCT>_<VERSION>
+#
+# - Expand `Assets` tab and find the release package zip file (pic_sdk_<product>_<version>.tar.gz)
+#
+# - Download Link: https://github.com/code-mechanic/pic_sdk/releases/download/PIC_SDK_<PRODUCT>_<VERSION>/pic_sdk_<product>_<version>.tar.gz
+#
+# - NOTE: You can also find the `Source code (zip)` and `Source code (tar.gz)` under `Assets`
+#    - This is the zip of entire PIC SDK git repo @ the tag used for the release
+#    - This includes files for all products supported by PIC SDK
+#    - This doesn't include contents of submodules
+#    - Hence, this is NOT intended to be used for any further release processes
+# ~~~
+
+name: PIC SDK CI Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      product:
+        description: "PIC SDK HW / Product"
+        type: choice
+        options:
+          - pic16f877a
+      release_version:
+        description: "Release Version (MM.mm.pp.bb)"
+        type: string
+      release_type:
+        description: Release type
+        type: choice
+        options:
+          - pre-release
+          - final-release
+
+jobs:
+  create-release-package:
+    name: Create product release package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set release TAG
+
+  validate-release-package-docker:
+    name: Validate product release package using Docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
