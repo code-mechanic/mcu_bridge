@@ -15,9 +15,9 @@ Please delete options that are not relevant.
 
 * Please describe the tests that you ran to verify your changes.
 
-## Checklist:
+## Checklist
 
-- [ ] Comments updated and spell checked
-- [ ] Corresponding documentation changes included
-- [ ] Review commits squashed
-- [ ] Final commit retested
+* [ ] Comments updated and spell checked
+* [ ] Corresponding documentation changes included
+* [ ] Review commits squashed
+* [ ] Final commit retested
