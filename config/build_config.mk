@@ -1,35 +1,26 @@
 #
-# This makefile setups some makefile variables used across the PIC SDK
+# This makefile setups some makefile variables used across the MCU BRIDGE
 #
 
-######################
-# User configuration #
-######################
-PIC_SDK_MCU ?= pic16f877a
+MCU_BRIDGE_BUILD_ROOT=build
+CMAKE_BUILD_PATH=$(MCU_BRIDGE_BUILD_ROOT)/$(MCU_BRIDGE_HW)
 
-#####################
-# SDK configuration #
-#####################
-EXECUTABLE := $(PIC_SDK_MCU)
-BUILD_PATH := build/$(PIC_SDK_MCU)
+# List of supported product by SDK
+MCU_BRIDGE_HW_SUPPORT_LIST += hw_pic
+MCU_BRIDGE_HW_SUPPORT_LIST += hw_avr
+MCU_BRIDGE_HW_SUPPORT_LIST += hw_stm
 
-# Initialize the SRC_PATH variable
-SRC_PATH += source/common_drivers
-SRC_PATH += source/$(PIC_SDK_MCU)
-SRC_PATH += test/$(PIC_SDK_MCU)
+include product/$(MCU_BRIDGE_HW)/cmake/$(MCU_BRIDGE_HW)_build_config.mk
 
-# Initialize the INC_PATH variable
-INC_PATH += include
-INC_PATH += include/mcu/config
-INC_PATH += include/mcu/drivers
-INC_PATH += source/common_drivers/dispatch
+ifeq ($(shell uname), Linux)
+  DOT := $(shell $(DOCKER) which dot)
+else
+  DOT := $(shell where dot 2>NUL)
+endif
 
-# List of supported MCU by SDK
-PIC_SDK_MCU_SUPPORT_LIST += pic16f877a
-
-##########################
-# Compiler configuration #
-##########################
-TOOLCHAIN = xc8
-CC = $(TOOLCHAIN)-cc
-CFLAGS = -mcpu=$(PIC_SDK_MCU) -Wall -O0 -std=c99 -save-temps --memorysummary
+# ##########################
+# # Compiler configuration #
+# ##########################
+# TOOLCHAIN = xc8
+# CC = $(TOOLCHAIN)-cc
+# CFLAGS = -mcpu=$(MCU_BRIDGE_MCU) -Wall -O0 -std=c99 -save-temps --memorysummary

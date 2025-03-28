@@ -1,9 +1,9 @@
-DOCKER_IMG        := ghcr.io/code-mechanic/pic_sdk
+DOCKER_IMG        := ghcr.io/code-mechanic/mcu_bridge
 DOCKER_VERSION    := latest
 DOCKER_PATH       := $(DOCKER_IMG):$(DOCKER_VERSION)
-CONTAINER         := pic_sdk_builder
-ROOT_DIR          := /home/pic_sdk
-PIC_SDK_PATH      := $(ROOT_DIR)
+CONTAINER         := mcu_bridge_builder
+ROOT_DIR          := /home/mcu_bridge
+MCU_BRIDGE_PATH   := $(ROOT_DIR)
 QUIET             := >/dev/null 2>&1
 
 # Run commands in the local docker container if not in said container

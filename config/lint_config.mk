@@ -3,7 +3,7 @@
 #-------------#
 
 # This is the path set in Docker image
-LINT_PATH         := /opt/pic_sdk
+LINT_PATH         := /opt/mcu_bridge
 UID               := $(shell id -u $$USER)
 
 #---------------------------------------#

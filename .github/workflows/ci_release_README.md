@@ -19,14 +19,14 @@ Format: `<project>`_`<product>`_MM.mm<.pp><_custom qualifier>
 
 * Note: Branch should be named all lowercase!!
 * `<PROJECT>`: Refer table above for list of projects.
-* `<PRODUCT>`: This represents the product that is supported for the release. Keep this same as “$PIC_SDK_HW” variable
+* `<PRODUCT>`: This represents the product that is supported for the release. Keep this same as “$MCU_BRIDGE_HW” variable
 * “.pp” is optional if branching from main branch as “.pp” of tag in main branch is always “.00”
 * “_custom qualifier” is optional when we need to customer specific release branch
 * Example
-  * pic_sdk_pic16f877a_01.15
-  * pic_sdk_pic16f877a_01.15.01
-  * pic_sdk_pic16f877a_01.15_customerx
-  * pic_sdk_pic16f877a_01.15.01_customerx
+  * mcu_bridge_pic16f877a_01.15
+  * mcu_bridge_pic16f877a_01.15.01
+  * mcu_bridge_pic16f877a_01.15_customerx
+  * mcu_bridge_pic16f877a_01.15.01_customerx
 
 ### Release Tag
 
@@ -34,11 +34,11 @@ Format: git tag -a `<PROJECT>`_`<PRODUCT>`_MM.mm.pp.bb `<COMMIT-ID>` -m “Comme
 
 * Note: Tag is all UPPERCASE!!
 * `<PROJECT>`: Refer table above for list of projects.
-* `<PRODUCT>`: This represents the product that is supported for the release. Keep this same as “$PIC_SDK_HW” variable
+* `<PRODUCT>`: This represents the product that is supported for the release. Keep this same as “$MCU_BRIDGE_HW” variable
 * `<COMMIT-ID>` : Get the commit id of your commit from “git log”
 * Tagging on main branch should always have the “.pp” version number as “.00”
 * While tagging in GIT, use -a option (annotated tag) and use -m to provide a meaningful message. Refer [![img](https://git-scm.com/favicon.ico)Git - Tagging](https://git-scm.com/book/en/v2/Git-Basics-Tagging)
-* Example: PIC_SDK_pic194877a_00.01.00.01
+* Example: MCU_BRIDGE_pic194877a_00.01.00.01
 
 ```
 git fetch origin
@@ -47,7 +47,7 @@ git log origin/main
 
 # Get the <COMMIT-ID> from the previous command.
 
-git tag -a PIC_SDK_PIC19F877A_00.01.00.01 b8c6bd770a90721ca64d034ce25b8104c5703cfc -m "PIC SDK tagging"
+git tag -a MCU_BRIDGE_PIC19F877A_00.01.00.01 b8c6bd770a90721ca64d034ce25b8104c5703cfc -m "MCU BRIDGE tagging"
 
-git push origin PIC_SDK_PIC16F877A_00.01.00.01
+git push origin MCU_BRIDGE_PIC16F877A_00.01.00.01
 ```

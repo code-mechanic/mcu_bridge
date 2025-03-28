@@ -10,7 +10,7 @@ docker_build:
 docker_start:
 	@docker image pull $(DOCKER_PATH)
 	@docker inspect $(CONTAINER)$(QUIET) && { docker stop $(CONTAINER)$(QUIET); docker rm $(CONTAINER)$(QUIET); } || echo "Creating $(CONTAINER)"
-	@docker run -it -d --name $(CONTAINER) -e "PIC_SDK_BASE=$(ROOT_DIR)" \
+	@docker run -it -d --name $(CONTAINER) -e "MCU_BRIDGE_BASE=$(ROOT_DIR)" \
 		--restart=always --add-host=host.docker.internal:host-gateway \
 		-v $(PWD):$(ROOT_DIR) \
 		-w $(ROOT_DIR) $(DOCKER_PATH)

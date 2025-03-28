@@ -1,56 +1,71 @@
+include config/developement_config.mk
 include config/build_config.mk
 
-# Check if PIC_SDK_MCU is one of the supported MCU values
-ifeq ($(filter $(PIC_SDK_MCU), $(PIC_SDK_MCU_SUPPORT_LIST)),)
-	$(error PIC_SDK_MCU is not a valid value. Expected $(PIC_SDK_MCU_SUPPORT_LIST))
+# Check if MCU_BRIDGE_HW is one of the supported values
+ifeq ($(filter $(MCU_BRIDGE_HW), $(MCU_BRIDGE_HW_SUPPORT_LIST)),)
+  $(error $(MCU_BRIDGE_HW) is not a valid MCU_BRIDGE_HW value. Expected $(MCU_BRIDGE_HW_SUPPORT_LIST))
 endif
 
-INC_FLAGS = $(addprefix -I, $(INC_PATH))
-SRC_FILES = $(foreach path, $(SRC_PATH), $(wildcard $(path)/*.c))
-OBJS := $(subst $(SRC_FILES),$(BUILD_PATH),$(SRC_FILES:.c=.p1))
-OBJ_FILES := $(notdir $(OBJS))
+# ==============================================================================
+# Build SDK, for the platform defined by MCU_BRIDGE_HW
+# ==============================================================================
+.PHONY: sdk
+sdk: cmakefiles
+	@$(DOCKER) cmake --build $(CMAKE_BUILD_PATH)
+	@echo Set local user ownership for ./$(MCU_BRIDGE_BUILD_ROOT)...
+	@$(DOCKER) chown -R $(UID):$(UID) ./$(MCU_BRIDGE_BUILD_ROOT)
 
-# Show current build options
-.PHONY: showcfg
-showcfg:
-	@echo
-	@echo Current Makefile build config, edit ./config/build_config.mk to change
-	@echo
-	@echo PIC_SDK_MCU=$(PIC_SDK_MCU)
-	@echo PIC_SDK_BUILD_TYPE=$(PIC_SDK_BUILD_TYPE)
-	@echo
+# ==============================================================================
+# Build with debug options, for the platform defined by MCU_BRIDGE_HW
+# ==============================================================================
+.PHONY: debug
+debug:
+debug: CMAKE_BUILD_TYPE = "Debug"
+debug: all
 
-# Help message
-.PHONY: help
-help:
-	@echo List of source file to be compile
-	@echo
-	@for src_file in $(SRC_FILES); do \
-		echo "$$src_file ..."; \
-	done
+# ==============================================================================
+#  Build with release options, for the platform defined by MCU_BRIDGE_HW
+# ==============================================================================
+.PHONY: release
+release:
+release: CMAKE_BUILD_TYPE = "Release"
+release: all
 
-# Build the SDK
-.PHONY: build_sdk
-build_sdk: $(BUILD_PATH)
-	@for src_file in $(SRC_FILES); do \
-		echo "Compiling $$src_file ..."; \
-		$(DOCKER) $(CC) $(CFLAGS) $(INC_FLAGS) -c $$src_file -o $(BUILD_PATH)/$$(basename $$src_file .c).p1; \
-	done
-	@echo Generating Output files ...
-	@$(DOCKER) sh -c "cd $(BUILD_PATH) && \
-		$(CC) $(CFLAGS) $(INC_FLAGS) $(OBJ_FILES) -o $(PIC_SDK_MCU)"
-
-# Create the build directory if it doesn't exist
-$(BUILD_PATH):
-	@mkdir -p $(BUILD_PATH)
-
-## Clean the build, for the platform defined by PIC_SDK_MCU
+# ==============================================================================
+# Clean the build, for the platform defined by MCU_BRIDGE_HW
+# ==============================================================================
 .PHONY: clean
 clean:
-	@if [ -d $(BUILD_PATH) ]; then \
-		$(DOCKER) rm -r $(BUILD_PATH); \
-		echo "Removed build folder"; \
-	fi
+	@$(DOCKER) rm -rf $(CMAKE_BUILD_PATH)
+
+# ==============================================================================
+# Generate cmake files, for the platform defined by MCU_BRIDGE_HW
+#
+# Edit below options to adjust cmake command line args,
+#   - CMAKE_BUILD_TYPE        = ./config/development_config.mk
+#   - MCU_BRIDGE_HW           = ./config/development_config.mk
+#   - CMAKE_VERBOSE_MAKEFILE  = ./config/development_config.mk
+#   - DOCKER_IMG              = ./config/docker_config.mk
+#   - CMAKE_BUILD_PATH        = ./config/build_config.mk
+#   - TOOLCHAIN_PATH          = ./product/$(MCU_BRIDGE_HW)/cmake/$(MCU_BRIDGE_HW)_build_config.mk
+#   - DCMAKE_TOOLCHAIN_FILE   = ./product/$(MCU_BRIDGE_HW)/cmake/$(MCU_BRIDGE_HW)_build_config.mk
+#   - MCU_BRIDGE_HW_ADDITIONAL_CMAKE_OPTIONS = ./product/$(MCU_BRIDGE_HW)/cmake/$(MCU_BRIDGE_HW)_build_config.mk
+# ==============================================================================
+.PHONY: cmakefiles
+cmakefiles:
+	@$(DOCKER) cmake -B $(CMAKE_BUILD_PATH) \
+				-DCMAKE_BUILD_TYPE=$(CMAKE_BUILD_TYPE) \
+				-DTOOLCHAIN_PATH=${TOOLCHAIN_PATH} \
+				-DMCU_BRIDGE_HW=$(MCU_BRIDGE_HW) \
+				-DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE} \
+				-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE} \
+				-DDOCKER_IMG=${DOCKER_IMG} \
+				$(MCU_BRIDGE_HW_ADDITIONAL_CMAKE_OPTIONS) \
+				--graphviz=$(CMAKE_BUILD_PATH)/cmake_graph.dot \
+				-G "Unix Makefiles"
+ifneq (, $(DOT))
+	-@$(DOCKER) dot -Tpng -o $(CMAKE_BUILD_PATH)/cmake_graph.png $(CMAKE_BUILD_PATH)/cmake_graph.dot
+endif
 
 include cmake/docker_targets.mk
 include cmake/lint_targets.mk

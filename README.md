@@ -1,6 +1,6 @@
-# PIC SDK
+# MCU BRIDGE
 
-SDK for PIC microcontrollers
+Bridging multiple MCUs with one SDK
 
 ### Start the Docker container
 

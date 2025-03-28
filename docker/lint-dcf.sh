@@ -2,7 +2,7 @@
 
 ##############################################################################
 # file:    lint-dcf.sh
-# author:  Tom Propst <tom.propst@iontra.com>
+# author:  Mohan Arunachalam <hashincludefun.h@gmail.com>
 # brief:   Utility to apply a common formatting to Delta Configuration Files
 #          Example or baseline files that are in source control can be
 #          difficult to compare from commit to commit without common format.
