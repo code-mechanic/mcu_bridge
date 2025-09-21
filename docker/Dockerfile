@@ -38,6 +38,7 @@ RUN apt install -y --no-install-recommends \
     software-properties-common
 
 ################################################################################
+
 # Python setup
 RUN apt install -y --no-install-recommends \
    python3-yaml \
@@ -97,7 +98,7 @@ RUN /tmp/cmake-${CMAKE_VERSION}-linux-x86_64.sh --skip-license --prefix=/usr/loc
 RUN rm /tmp/cmake-${CMAKE_VERSION}-linux-x86_64.sh
 
 # Add code Standards files
-WORKDIR /opt/pic_sdk
+WORKDIR /opt/mcu_bridge
 COPY ./lint.pl ./
 COPY ./lint-dcf.sh ./
 COPY ./check-sub-branch.sh ./
@@ -108,6 +109,8 @@ COPY ./commitlint.config.js ./
 RUN apt list --installed > /etc/apt-installed-package-list.txt
 
 ################################################################################
+
+# PIC Tool chain setup
 
 # Set working directory
 WORKDIR /tmp
@@ -138,6 +141,20 @@ ENV PATH="/opt/microchip/xc8/v${XC8_VERSION}/bin:${PATH}"
 
 # Update PATH environment variable
 #ENV PATH="/opt/microchip/xc32/v${XC32_VERSION}/bin:${PATH}"
+
+# STM Tool chain setup
+
+# Set a working directory
+WORKDIR /opt
+
+# Set the toolchain url
+ARG TOOLCHAIN_URL="https://developer.arm.com/-/media/Files/downloads/gnu-rm/10.3-2021.10/gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2"
+
+# Get the toolchain
+RUN wget ${TOOLCHAIN_URL} \
+    && export TOOLCHAIN_FILENAME=$(basename "${TOOLCHAIN_URL}") \
+    && tar -xvf ${TOOLCHAIN_FILENAME} \
+    && rm ${TOOLCHAIN_FILENAME}
 
 # Set default command
 CMD ["/bin/bash"]

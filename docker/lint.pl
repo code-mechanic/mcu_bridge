@@ -2,7 +2,7 @@
 
 #########################################################################################################
 # File    lint
-# Author  Mark Mulrooney <mark.mulrooney@iontra.com>
+# Author  Mohan Arunachalam <hashincludefun.h@gmail.com>
 # Brief   Ensure files meet the clang-format style
 #########################################################################################################
 

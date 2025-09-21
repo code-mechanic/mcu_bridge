@@ -1,4 +1,4 @@
-name: PIC SDK CI Pull Request
+name: MCU BRIDGE CI Pull Request
 
 on: [pull_request]
 
@@ -16,7 +16,7 @@ jobs:
 
       - name: Code Lint
         run:
-          docker exec pic_sdk_builder bash -c "make lint"
+          docker exec mcu_bridge_builder bash -c "make lint"
 
   commit-lint:
     runs-on: ubuntu-latest

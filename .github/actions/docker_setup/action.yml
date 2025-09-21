@@ -1,5 +1,5 @@
 name: Docker Setup
-description: Docker login and start pic_sdk_builder container
+description: Docker login and start mcu_bridge_builder container
 
 inputs:
   ghcr_token:
