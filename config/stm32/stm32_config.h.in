@@ -1,0 +1,6 @@
+#ifndef STM32_CONFIG_H
+#define STM32_CONFIG_H
+
+#include "@MCU_BRIDGE_MCU@.h"
+
+#endif /* STM32_CONFIG_H */

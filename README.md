@@ -1,6 +1,8 @@
+[TOC]
+
 # MCU BRIDGE
 
-Bridging multiple MCUs with one SDK
+MCU agnostic driver
 
 ### Start the Docker container
 
@@ -8,38 +10,16 @@ Bridging multiple MCUs with one SDK
 make docker_start # One time execution is fine
 ```
 
-### Stop the Docker container
+### Build SDK
+
+#### STM32 MCU setup
 
 ```C
-make docker_stop
+make add-stm32-family MCU_BRIDGE_MCU=stm32g4xx
+make sdk MCU_BRIDGE_HW=stm32 MCU_BRIDGE_MCU=stm32g4xx MCU_BRIDGE_MCU_VERSION=stm32g474xx
 ```
 
-### Docker troubleshoot
-
-If there is any issue like below then probably there should be docker login required.
-
-**ISSUE:**
-
-```
-Error response from daemon: denied
-make: *** [Makefile:46: docker_start] Error 1
-```
-
-**SOLUTION:**
-
-```
-docker login ghcr.io -u <GITHUB_USERNAME>
-
-Password for login is Personal access token generated in GITHIB
-```
-
-#### Build SDK
-
-```C
-make build_sdk
-```
-
-#### Clean SDK
+### Clean SDK
 
 ```C
 make clean
