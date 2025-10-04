@@ -8,7 +8,7 @@
 
 typedef struct {
     GPIO_TypeDef* port;
-    uint16_t pin;
+    uint16_t      pin;
 } stm32_gpio_ctx_t;
 
 status_t stm32_gpio_ctx_init(stm32_gpio_ctx_t* ctx, GPIO_TypeDef* port, uint16_t pin);
