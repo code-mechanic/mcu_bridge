@@ -10,3 +10,22 @@
    * `docker push ghcr.io/code-mechanic/mcu_bridge:latest`
 5. Create and run a new container from an image. If image is not present then it will automatically do pull.
    * `docker run -it ghcr.io/code-mechanic/mcu_bridge:latest`
+
+### Docker troubleshoot
+
+If there is any issue like below then probably there should be docker login required.
+
+**ISSUE:**
+
+```
+Error response from daemon: denied
+make: *** [Makefile:46: docker_start] Error 1
+```
+
+**SOLUTION:**
+
+```
+docker login ghcr.io -u <GITHUB_USERNAME>
+
+Password for login is Personal access token generated in GITHIB
+```

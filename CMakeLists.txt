@@ -12,24 +12,18 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # includes functions, variables common across all MCU_BRIDGE_HW
 include(cmake/mcu_bridge.cmake)
 
-# includes functions, variables specific to a given MCU_BRIDGE_HW
-# MCU_BRIDGE_HW is passed from top level makefile
-if((${MCU_BRIDGE_HW} STREQUAL hw_avr)
-OR (${MCU_BRIDGE_HW} STREQUAL hw_pic)
-OR (${MCU_BRIDGE_HW} STREQUAL hw_stm)
-)
-    include(product/${MCU_BRIDGE_HW}/cmake/${MCU_BRIDGE_HW}.cmake)
-else()
-    message( STATUS "MCU_BRIDGE_HW not set, so no product will be built" )
-endif()
+# includes functions, variables specific to the selected MCU_BRIDGE_HW
+include(config/${MCU_BRIDGE_HW}/${MCU_BRIDGE_HW}.cmake)
 
 # display common variable values
 mcu_bridge_show_config()
 
-add_subdirectory(product)
+# MCU bridge header interfaces
+add_library(mcu_bridge_headers INTERFACE)
+target_include_directories(mcu_bridge_headers
+  INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include
+  INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include/common)
+
+add_subdirectory(cmake)
 add_subdirectory(source)
-if(EXISTS test/)
-if(${MCU_BRIDGE_TEST})
-  add_subdirectory(test)
-endif()
-endif()
+add_subdirectory(mcu_platform)

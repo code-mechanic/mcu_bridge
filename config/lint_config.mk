@@ -13,6 +13,7 @@ UID               := $(shell id -u $$USER)
 # Add all directories for which linting needs to be enabled.
 LINT_CXX_FILES_DIR_LIST := include \
                            source \
+                           mcu_platform \
                            test \
 
 # Add any subdirectories for which linting needs to be skipped
@@ -33,6 +34,7 @@ LINT_CXX_CMD          := $(FORMAT_CXX_CMD) --dry-run --Werror
 # Add all directories for which linting needs to be enabled.
 LINT_CMAKE_FILES_DIR_LIST := config \
                              source \
+                             mcu_platform \
                              test \
 
 # Add any subdirectories for which linting needs to be skipped
