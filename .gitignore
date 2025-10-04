@@ -1,5 +1,7 @@
 temp/
 .vscode
 build/
+build_logs/
 docs/
 external/
+config/stm32/*_hal_conf.h

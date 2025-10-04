@@ -6,10 +6,10 @@ ifeq ($(filter $(MCU_BRIDGE_HW), $(MCU_BRIDGE_HW_SUPPORT_LIST)),)
 endif
 
 # ==============================================================================
-# Build SDK, for the platform defined by MCU_BRIDGE_HW
+# Build mcu_bridge, for the platform defined by MCU_BRIDGE_HW
 # ==============================================================================
-.PHONY: sdk
-sdk: cmakefiles
+.PHONY: mcu_bridge
+mcu_bridge: cmakefiles
 	@$(DOCKER) cmake --build $(CMAKE_BUILD_PATH)
 	@echo Set local user ownership for ./$(MCU_BRIDGE_BUILD_ROOT)...
 	@$(DOCKER) chown -R $(UID):$(UID) ./$(MCU_BRIDGE_BUILD_ROOT)

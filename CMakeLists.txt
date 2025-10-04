@@ -24,6 +24,10 @@ target_include_directories(mcu_bridge_headers
   INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include
   INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include/common)
 
+# propagate selected MCU_BRIDGE_HW to subdirectories
+string(TOUPPER "${MCU_BRIDGE_HW}" MCU_BRIDGE_HW_MACRO)
+add_compile_definitions(${MCU_BRIDGE_HW_MACRO}=1)
+
 add_subdirectory(cmake)
 add_subdirectory(source)
 add_subdirectory(mcu_platform)
