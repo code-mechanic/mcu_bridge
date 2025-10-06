@@ -1,6 +1,8 @@
 #include <stm32_gpio.h>
 #include <assert.h>
-#include <stm32g4xx_hal_gpio.h>
+
+/* STM32 HAL GPIO header. Macro will be defined in CMakeLists.txt */
+#include STM32_HAL_GPIO_HEADER
 
 static status_t stm32_gpio_read(void* mcu_gpio_ctx, mcu_gpio_pin_val_t* p_val);
 

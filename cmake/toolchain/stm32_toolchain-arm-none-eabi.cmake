@@ -1,6 +1,6 @@
-# -----------------------------------------------------------------##
-# CMake arm-none-eabi toolchain file for STM32G4 series processors ##
-# -----------------------------------------------------------------##
+# ---------------------------------------------------------------##
+# CMake arm-none-eabi toolchain file for STM32 series processors ##
+# ---------------------------------------------------------------##
 
 # Append current directory to CMAKE_MODULE_PATH for making device specific cmake
 # modules visible
@@ -118,16 +118,17 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 # --------------------------------#
 
 # ~~~
-# STM32G4 MCU specific flags
+# STM32 MCU specific flags
 # -mcpu                 Build for Arm v7-m Cortex-M4
 # -mthumb               Use the thumb instruction set
-# -mfpu=fpv4-sp-d16     VFPv4 single precision FPU on the STM32G4
+# -mfpu=fpv4-sp-d16     VFPv4 single precision FPU
 # -mfloat-abi=hard      Use floating point instructions and the floating point ABI
 #
 # User defined variable
 # ~~~
-set(STM32G4_MCU_FLAGS
-    "-mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard")
+set(STM32_MCU_FLAGS 
+    "-mcpu=cortex-m4 -mthumb"
+)
 
 # ~~~
 # Generic Object Flags
@@ -160,7 +161,7 @@ set(OBJECT_GEN_FLAGS
 #   the C compiler when creating an executable.
 # ~~~
 set(CMAKE_C_FLAGS
-    "${STM32G4_MCU_FLAGS} ${OBJECT_GEN_FLAGS} -std=gnu99 "
+    "${STM32_MCU_FLAGS} ${OBJECT_GEN_FLAGS} -std=gnu99 "
     CACHE INTERNAL "C Compiler options")
 
 # ~~~
@@ -172,7 +173,7 @@ set(CMAKE_C_FLAGS
 #   the C++ compiler when creating an executable.
 # ~~~
 set(CMAKE_CXX_FLAGS
-    "${STM32G4_MCU_FLAGS} ${OBJECT_GEN_FLAGS} -std=c++17 -fno-rtti -fno-exceptions -fno-threadsafe-statics -fno-unwind-tables -fmessage-length=0 -funsigned-char"
+    "${STM32_MCU_FLAGS} ${OBJECT_GEN_FLAGS} -std=c++17 -fno-rtti -fno-exceptions -fno-threadsafe-statics -fno-unwind-tables -fmessage-length=0 -funsigned-char"
     CACHE INTERNAL "C++ Compiler options")
 
 # ~~~
@@ -184,7 +185,7 @@ set(CMAKE_CXX_FLAGS
 #   the assembler when creating an executable.
 # ~~~
 set(CMAKE_ASM_FLAGS
-    "${STM32G4_MCU_FLAGS} ${OBJECT_GEN_FLAGS} -x assembler-with-cpp "
+    "${STM32_MCU_FLAGS} ${OBJECT_GEN_FLAGS} -x assembler-with-cpp "
     CACHE INTERNAL "ASM Compiler options")
 
 # ~~~
@@ -199,7 +200,7 @@ set(CMAKE_ASM_FLAGS
 #   the linker when creating an executable.
 # ~~~
 set(CMAKE_EXE_LINKER_FLAGS
-    "${STM32G4_MCU_FLAGS} --specs=nano.specs --specs=nosys.specs -Wl,--gc-sections -Wl,--print-memory-usage"
+    "${STM32_MCU_FLAGS} --specs=nano.specs --specs=nosys.specs -Wl,--gc-sections -Wl,--print-memory-usage"
     CACHE INTERNAL "Linker options")
 
 # ----------------------------------------------#

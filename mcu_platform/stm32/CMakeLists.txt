@@ -1,13 +1,16 @@
-# STM32 interfaces
+# STM32 bridge header interfaces
 add_library(stm32_bridge_headers INTERFACE)
 target_include_directories(stm32_bridge_headers
   INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set(TARGET stm32_bridge_driver)
 
+# STM32 bridge Driver
 add_library(
   ${TARGET}
   source/stm32_gpio.c)
+
+target_compile_definitions(${TARGET} PUBLIC STM32_HAL_GPIO_HEADER="${MCU_BRIDGE_MCU}_hal_gpio.h")
 
 target_link_libraries(${TARGET}
   PRIVATE mcu_bridge_headers
@@ -20,3 +23,4 @@ configure_file(
 )
 
 target_include_directories(${TARGET} PUBLIC ${CMAKE_BINARY_DIR}/generated)
+

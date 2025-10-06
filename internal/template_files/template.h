@@ -93,6 +93,12 @@ typedef struct my_module_struct_t_ {
 // +--------------------------------------------------------------------------+
 
 /**
+ * \name Initialization functions
+ *
+ *  @{
+ */
+
+ /**
  * \brief Function description
  *
  * \param[in]  param1   parameter that is read only for this func
@@ -101,6 +107,28 @@ typedef struct my_module_struct_t_ {
  * \return describe the return value
  */
 int32_t my_module_init(uint32_t param1, uint32_t* p_param2);
+
+/** @} */
+
+/**
+ * \name Setup functions
+ *
+ *  @{
+ */
+
+void my_module_setup(uint32_t param1, uint32_t* p_param2);
+
+/** @} */
+
+/**
+ * \name Run-time functions
+ *
+ *  @{
+ */
+
+void my_module_run(uint32_t param1, uint32_t* p_param2);
+
+/** @} */
 
 #ifdef __cplusplus
 }
