@@ -1,4 +1,4 @@
-include config/docker_config.mk
+include cmake/config_docker.mk
 
 # Build the Docker image
 .PHONY: docker_build

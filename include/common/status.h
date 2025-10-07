@@ -8,10 +8,22 @@ extern "C" {
 #include <stdint.h>
 #include <stddef.h>
 
-#define STATUS_SUCCESS             (0x00000000)
-#define STATUS_FAILURE             (0x00000001)
-#define STATUS_INVALID_PARAMS      (0x00000002)
-#define STATUS_UNSUPPORTED_FEATURE (0x00000003)
+/**
+ *  \anchor status_t
+ *  \name Type status_t, common status codes used by all modules
+ *
+ *  @{
+ */
+typedef enum status_t_ {
+    STATUS_SUCCESS                 = 0,
+    STATUS_FAILURE                 = 1,
+    STATUS_INVALID_PARAMS          = 2,
+    STATUS_UNSUPPORTED_FEATURE     = 3,
+    STATUS_MCU_INIT_DRIVER_FAILURE = 4,
+    STATUS_MCU_GPIO_NOT_CONFIGURED = 5,
+} status_t;
+
+/** @} */
 
 #define EXEC_FUNC_IF_CUR_STATUS_SUCCESS(status, function)        \
     do {                                                         \
@@ -35,7 +47,6 @@ extern "C" {
             }                                                           \
         }                                                               \
     } while(0);
-typedef int32_t status_t;
 
 #ifdef __cplusplus
 }
