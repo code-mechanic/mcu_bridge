@@ -1,7 +1,3 @@
-set(TARGET mcu_bridge_driver)
-
-add_library(
-  ${TARGET}
-  mcu_gpio.c)
-
-target_link_libraries(${TARGET} PRIVATE mcu_bridge_headers)
+add_subdirectory(mcu_bridge)
+add_subdirectory(mcu_drivers)
+add_subdirectory(${MCU_BRIDGE_HW}_drivers)

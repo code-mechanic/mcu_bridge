@@ -1,5 +1,5 @@
 ################################################################################
-# MCU Bridge STM32 HAL Driver Build
+# STM32 HAL Driver Build
 #
 # Usage:
 #   - Set MCU_BRIDGE_MCU to select the STM32 family (e.g. stm32g0xx, stm32g4xx)
@@ -27,6 +27,7 @@ string(SUBSTRING "${MCU_BRIDGE_MCU}" 5 2 STM32_MCU_ID)
 string(TOLOWER "${STM32_MCU_ID}" STM32_MCU_ID_LOWER)
 set(CMSIS_DEVICE_PATH ${STM32_REPO_PATH}/cmsis_device_${STM32_MCU_ID_LOWER})
 message(STATUS "# Using CMSIS Device Path: ${CMSIS_DEVICE_PATH}")
+message(STATUS "# Using HAL Path: ${STM32_HAL_DRIVER_SRC_PATH}")
 
 # Gather source files, exclude templates
 file(GLOB STM32_HAL_DRIVER_SRC_FILES "${STM32_HAL_DRIVER_SRC_PATH}/*.c")
@@ -59,6 +60,6 @@ target_include_directories(
 string(TOUPPER "${MCU_BRIDGE_MCU_VERSION}" MCU_FINAL_UP)
 string(REPLACE "X" "x" MCU_FINAL "${MCU_FINAL_UP}")
 
-message(STATUS "# Defined [MCU_FINAL] as ${MCU_FINAL}")
+message(STATUS "# Defined [MCU_HAL_MACRO] as ${MCU_FINAL}")
 target_compile_definitions(${TARGET} PUBLIC "${MCU_FINAL}")
 target_compile_definitions(${TARGET} PUBLIC "${MCU_FINAL}")

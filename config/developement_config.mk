@@ -14,5 +14,3 @@ CMAKE_BUILD_TYPE?=Release
 
 # Valid values: ON, OFF
 CMAKE_VERBOSE_MAKEFILE?=OFF
-
-include config/build_config.mk

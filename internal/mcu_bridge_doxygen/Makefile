@@ -7,21 +7,10 @@
 export MCU_BRIDGE_PATH?=${shell pwd}/../../
 export DOXY_DOCS_OUTPUT_PATH=$(MCU_BRIDGE_PATH)/docs/user_guide
 
-PUMLS := $(shell find . -iname "*.puml")
-PNGS  := $(PUMLS:.puml=.png)
-
-all: images
+all:
 	mkdir -p $(DOXY_DOCS_OUTPUT_PATH)
-# cp theme/*.png $(DOXY_DOCS_OUTPUT_PATH)/
 	@echo Generating doxygen documentation ...
 	doxygen doxygen.cfg
-
-.PHONY: images
-images: $(PNGS)
-	@echo Generating plantuml image files ...
-
-%.png: %.puml
-	plantuml $<
 
 clean:
 	rm -rf $(DOXY_DOCS_OUTPUT_PATH)

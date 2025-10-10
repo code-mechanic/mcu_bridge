@@ -19,15 +19,16 @@ include(config/${MCU_BRIDGE_HW}/${MCU_BRIDGE_HW}.cmake)
 mcu_bridge_show_config()
 
 # MCU bridge header interfaces
-add_library(mcu_bridge_headers INTERFACE)
-target_include_directories(mcu_bridge_headers
+add_library(mcu_headers INTERFACE)
+target_include_directories(mcu_headers
   INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include
+  INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include/mcu_drivers
   INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include/common)
 
 # propagate selected MCU_BRIDGE_HW to subdirectories
 string(TOUPPER "${MCU_BRIDGE_HW}" MCU_BRIDGE_HW_MACRO)
 add_compile_definitions(${MCU_BRIDGE_HW_MACRO}=1)
 
+add_subdirectory(config)
 add_subdirectory(cmake)
 add_subdirectory(source)
-add_subdirectory(mcu_platform)

@@ -1,4 +1,5 @@
 include config/developement_config.mk
+include cmake/config_build.mk
 
 # Check if MCU_BRIDGE_HW is one of the supported values
 ifeq ($(filter $(MCU_BRIDGE_HW), $(MCU_BRIDGE_HW_SUPPORT_LIST)),)
@@ -20,7 +21,7 @@ mcu_bridge: cmakefiles
 .PHONY: debug
 debug:
 debug: CMAKE_BUILD_TYPE = "Debug"
-debug: all
+debug: mcu_bridge
 
 # ==============================================================================
 #  Build with release options, for the platform defined by MCU_BRIDGE_HW
@@ -28,7 +29,7 @@ debug: all
 .PHONY: release
 release:
 release: CMAKE_BUILD_TYPE = "Release"
-release: all
+release: mcu_bridge
 
 # ==============================================================================
 # Clean the build, for the platform defined by MCU_BRIDGE_HW
@@ -76,7 +77,7 @@ endif
 # ==============================================================================
 # Other targets
 # ==============================================================================
-include cmake/docker_targets.mk
-include cmake/lint_targets.mk
-include cmake/docs_targets.mk
-include cmake/git_targets.mk
+include cmake/targets_docker.mk
+include cmake/targets_lint.mk
+include cmake/targets_docs.mk
+include cmake/targets_git.mk

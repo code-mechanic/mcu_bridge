@@ -130,6 +130,17 @@ void my_module_run(uint32_t param1, uint32_t* p_param2);
 
 /** @} */
 
+// +--------------------------------------------------------------------------+
+// |                                                                          |
+// |                          Static inline Functions                         |
+// |                                                                          |
+// +--------------------------------------------------------------------------+
+
+static inline uint32_t my_module_helper_func(uint32_t param)
+{
+    return param + MY_MODULE_DEFINITION;
+}
+
 #ifdef __cplusplus
 }
 #endif

@@ -1,4 +1,4 @@
-include config/lint_config.mk
+include cmake/config_lint.mk
 
 # lint_cmake is not included here since it looks like there is some instability with cmakelang.
 # It behaves differently on various systems for some files.
