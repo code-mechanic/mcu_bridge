@@ -12,9 +12,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # includes functions, variables common across all MCU_BRIDGE_HW
 include(cmake/mcu_bridge.cmake)
 
-# includes functions, variables specific to the selected MCU_BRIDGE_HW
-include(config/${MCU_BRIDGE_HW}/${MCU_BRIDGE_HW}.cmake)
-
 # display common variable values
 mcu_bridge_show_config()
 
@@ -22,13 +19,16 @@ mcu_bridge_show_config()
 add_library(mcu_headers INTERFACE)
 target_include_directories(mcu_headers
   INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include
-  INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include/mcu_drivers
-  INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include/common)
+)
 
 # propagate selected MCU_BRIDGE_HW to subdirectories
 string(TOUPPER "${MCU_BRIDGE_HW}" MCU_BRIDGE_HW_MACRO)
-add_compile_definitions(${MCU_BRIDGE_HW_MACRO}=1)
+add_compile_definitions(${MCU_BRIDGE_HW_MACRO})
 
 add_subdirectory(config)
 add_subdirectory(cmake)
 add_subdirectory(source)
+
+if(EXISTS example/)
+  add_subdirectory(example)
+endif()

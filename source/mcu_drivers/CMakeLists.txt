@@ -8,5 +8,5 @@ add_library(
 
 target_link_libraries(
     ${TARGET}
-    PUBLIC mcu_bridge_headers
+    PUBLIC ${MCU_BRIDGE_HW}_bridge_drivers # Link implemenation of mcu_bridge/mcu_*_bridge.h
 )

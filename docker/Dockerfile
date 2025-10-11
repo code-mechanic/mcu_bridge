@@ -35,6 +35,7 @@ RUN apt install -y --no-install-recommends \
     plantuml \
     lsb-release \
     nano \
+    netcat \
     software-properties-common
 
 ################################################################################

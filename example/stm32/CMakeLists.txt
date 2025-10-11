@@ -1,0 +1,5 @@
+if(${MCU_BRIDGE_EXAMPLE} STREQUAL "all")
+    add_subdirectory(gpio)
+else()
+    add_subdirectory(${MCU_BRIDGE_EXAMPLE})
+endif()

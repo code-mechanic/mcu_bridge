@@ -18,7 +18,17 @@
 extern "C" {
 #endif
 
-#include <status.h>
+#include <common/status.h>
+#include <mcu_bridge_cfg.h>
+
+#ifdef STM32_HAL_HEADER
+/* STM32 MCU header. Macro will be created as a part of CMakeLists.txt */
+#include STM32_HAL_HEADER
+#endif
+
+#ifdef MCU_BRIDGE_CFG_GPIO_DRIVER_ENABLED
+#include <mcu_drivers/mcu_gpio.h>
+#endif
 
 // +--------------------------------------------------------------------------+
 // |                                                                          |
@@ -58,6 +68,13 @@ typedef struct mcu_bridge_init_param_t_ {
  */
 status_t mcu_bridge_init(mcu_bridge_init_param_t* p_init_param);
 
+/**
+ * \brief Delay for a given number of milliseconds
+ *
+ * \param[in] delay_ms Number of milliseconds to delay
+ */
+void mcu_bridge_delay_ms(uint32_t delay_ms);
+
 // +--------------------------------------------------------------------------+
 // |                                                                          |
 // |                          Static inline Functions                         |
@@ -74,5 +91,5 @@ status_t mcu_bridge_init(mcu_bridge_init_param_t* p_init_param);
 
 /**
  * \defgroup MCU_BRIDGE MCU Bridge API
- * \brief 
+ * \brief
  */

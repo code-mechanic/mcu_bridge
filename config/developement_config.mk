@@ -14,3 +14,6 @@ CMAKE_BUILD_TYPE?=Release
 
 # Valid values: ON, OFF
 CMAKE_VERBOSE_MAKEFILE?=OFF
+
+# Valid values: all, gpio
+MCU_BRIDGE_EXAMPLE?=all

@@ -1,5 +1,6 @@
-set(TARGET stm32_bridge_drivers)
+set(TARGET ${MCU_BRIDGE_HW}_bridge_drivers)
 
+# create stm32_bridge_drivers library
 add_library(
     ${TARGET}
     stm32_init.c
@@ -16,6 +17,7 @@ target_compile_definitions(
 
 target_link_libraries(
     ${TARGET}
-    PRIVATE mcu_bridge_drivers
-    PRIVATE stm32_hal_driver
+    PUBLIC mcu_bridge_cfg      # To access macro from config/mcu_bridge_cfg.h
+    PUBLIC ${MCU_BRIDGE_HW}_bridge_headers  # To access source/mcu_bridge folder
+    PUBLIC ${MCU_BRIDGE_MCU}_hal_driver     # Core dependency for stm32
 )
