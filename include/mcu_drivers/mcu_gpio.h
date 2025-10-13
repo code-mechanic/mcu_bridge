@@ -26,7 +26,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
-#include <status.h>
+#include <common/status.h>
 
 // +--------------------------------------------------------------------------+
 // |                                                                          |
@@ -227,8 +227,9 @@ status_t mcu_gpio_deinit(void);
 /**
  * \brief Sets default values to a GPIO configuration structure.
  *
- * \param[in] gpio_idx: GPIO index. Index should not exceed \c MCU_CFG_GPIO_MAX_PINS_TO_USE in mcu_config.h and \ref
- * mcu_gpio_create_pin to create a GPIO pin.
+ * \param[in] gpio_idx: GPIO index. Index should not exceed \c MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE in mcu_config.h and
+ * \ref mcu_gpio_create_pin to create a GPIO pin.
+ *
  * \param[in] p_config: Pointer to a GPIO configuration structure.
  *
  * \return Status of the operation.
@@ -248,8 +249,9 @@ status_t mcu_gpio_config_set_default(uint32_t gpio_idx, mcu_gpio_config_t* p_con
  * \ref mcu_gpio_config_callback_t to configure the Alternate function.
  *
  * \param[in] gpio_idx The index of the GPIO pin to be configured. Index should not exceed \c
- * MCU_CFG_GPIO_MAX_PINS_TO_USE in mcu_cfg.h and \ref mcu_gpio_create_pin to create a GPIO pin. \param[in] p_config The
- * configuration to be applied to the GPIO pin. \ref mcu_gpio_config_t
+ * MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE in mcu_bridge_cfg.h and \ref mcu_gpio_create_pin to create a GPIO pin.
+ *
+ * \param[in] p_config The configuration to be applied to the GPIO pin. \ref mcu_gpio_config_t
  *
  * \return STATUS_SUCCESS if the configuration was successful.
  */
@@ -266,9 +268,10 @@ status_t mcu_gpio_config(uint32_t gpio_idx, mcu_gpio_config_t* p_config);
 /**
  * \brief Reads the value of a GPIO pin.
  *
- * \param[in] gpio_idx The index of the GPIO pin to be read. Index should not exceed \c MCU_CFG_GPIO_MAX_PINS_TO_USE in
- * mcu_cfg.h and \ref mcu_gpio_create_pin to create a GPIO pin. \param[out] p_val The value of the GPIO pin to be
- * stored.
+ * \param[in] gpio_idx The index of the GPIO pin to be read. Index should not exceed \c
+ * MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE in mcu_bridge_cfg.h and \ref mcu_gpio_create_pin to create a GPIO pin.
+ *
+ * \param[out] p_val The value of the GPIO pin to be stored.
  *
  * \return STATUS_SUCCESS if the read operation was successful.
  */
@@ -278,7 +281,7 @@ status_t mcu_gpio_read(uint32_t gpio_idx, mcu_gpio_pin_val_t* p_val);
  * \brief Writes a value to a GPIO pin.
  *
  * \param[in] gpio_idx The index of the GPIO pin to be written. Index should not exceed \c
- * MCU_CFG_GPIO_MAX_PINS_TO_USE in mcu_cfg.h and \ref mcu_gpio_create_pin to create a GPIO pin.
+ * MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE in mcu_bridge_cfg.h and \ref mcu_gpio_create_pin to create a GPIO pin.
  * \param[in] val The value to be written to the GPIO pin.
  *
  * \return STATUS_SUCCESS if the write operation was successful.
@@ -289,7 +292,7 @@ status_t mcu_gpio_write(uint32_t gpio_idx, mcu_gpio_pin_val_t val);
  * \brief Toggles the value of a GPIO pin.
  *
  * \param[in] gpio_idx The index of the GPIO pin to be toggled. Index should not exceed \c
- * MCU_CFG_GPIO_MAX_PINS_TO_USE in mcu_cfg.h and \ref mcu_gpio_create_pin to create a GPIO pin.
+ * MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE in mcu_bridge_cfg.h and \ref mcu_gpio_create_pin to create a GPIO pin.
  *
  * \return STATUS_SUCCESS if the toggle operation was successful.
  */
@@ -298,9 +301,10 @@ status_t mcu_gpio_toggle(uint32_t gpio_idx);
 /**
  * \brief Gets the direction of a GPIO pin.
  *
- * \param[in] gpio_idx The index of the GPIO pin to be read. Index should not exceed \c MCU_CFG_GPIO_MAX_PINS_TO_USE in
- * mcu_cfg.h and \ref mcu_gpio_create_pin to create a GPIO pin. \param[in] dir The direction of the GPIO pin to be
- * stored.
+ * \param[in] gpio_idx The index of the GPIO pin to be read. Index should not exceed \c
+ * MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE in mcu_bridge_cfg.h and \ref mcu_gpio_create_pin to create a GPIO pin.
+ *
+ * \param[in] dir The direction of the GPIO pin to be stored.
  *
  * \return STATUS_SUCCESS if the read operation was successful.
  */
@@ -309,9 +313,9 @@ status_t mcu_gpio_set_dir(uint32_t gpio_idx, mcu_gpio_pin_dir_t dir);
 /**
  * \brief Gets the direction of a GPIO pin.
  *
- * \param[in] gpio_idx The index of the GPIO pin to be read. Index should not exceed \c MCU_CFG_GPIO_MAX_PINS_TO_USE in
- * mcu_cfg.h and \ref mcu_gpio_create_pin to create a GPIO pin. \param[out] p_dir The direction of the GPIO pin to be
- * stored.
+ * \param[in] gpio_idx The index of the GPIO pin to be read. Index should not exceed \c
+ * MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE in mcu_bridge_cfg.h and \ref mcu_gpio_create_pin to create a GPIO pin.
+ * \param[out] p_dir The direction of the GPIO pin to be stored.
  *
  * \return STATUS_SUCCESS if the read operation was successful.
  */
@@ -334,10 +338,10 @@ status_t mcu_gpio_get_dir(uint32_t gpio_idx, mcu_gpio_pin_dir_t* p_dir);
  *
  * \param[in] port Port number.
  *             Example for port A, use 0; for port B, use 1, etc.
- *             Port number must be less than \c MCU_CFG_GPIO_MAX_PORTS_AVAILABLE in mcu_cfg.h.
+ *             Port number must be less than \c MCU_BRIDGE_CFG_GPIO_MAX_PORTS_AVAILABLE in mcu_bridge_cfg.h.
  * \param[in] pin Pin number.
  *            Example for pin 0, use 0; for pin 1, use 1, etc.
- *            Pin number must be less than \c MCU_CFG_GPIO_MAX_PINS_AVAILABLE in mcu_cfg.h.
+ *            Pin number must be less than \c MCU_BRIDGE_CFG_GPIO_MAX_PINS_PER_PORT in mcu_bridge_cfg.h.
  * \return GPIO pin value
  */
 static inline mcu_gpio_pin_t mcu_gpio_create_pin(uint8_t port, uint8_t pin)

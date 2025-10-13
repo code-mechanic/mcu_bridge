@@ -14,7 +14,7 @@
 message(STATUS "Configuring STM32 HAL Driver for ${MCU_BRIDGE_MCU_VERSION} in ${MCU_BRIDGE_HW}")
 
 # Target name
-set(TARGET stm32_hal_driver)
+set(TARGET ${MCU_BRIDGE_MCU}_hal_driver)
 
 # Paths
 set(STM32_REPO_PATH ${MCU_BRIDGE_PATH}/external/stm32)
@@ -38,7 +38,7 @@ list(FILTER STM32_HAL_DRIVER_SRC_FILES EXCLUDE REGEX ".*_template\\.c$")
 #     message(STATUS "  ${file}")
 # endforeach()
 
-# Build the HAL driver library
+# create stm32_hal_driver library
 add_library(${TARGET} ${STM32_HAL_DRIVER_SRC_FILES})
 
 # Special compile options for STM32G0 MCUs
@@ -62,4 +62,4 @@ string(REPLACE "X" "x" MCU_FINAL "${MCU_FINAL_UP}")
 
 message(STATUS "# Defined [MCU_HAL_MACRO] as ${MCU_FINAL}")
 target_compile_definitions(${TARGET} PUBLIC "${MCU_FINAL}")
-target_compile_definitions(${TARGET} PUBLIC "${MCU_FINAL}")
+target_compile_definitions(${TARGET} PUBLIC "USE_FULL_LL_DRIVER")

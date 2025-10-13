@@ -1,33 +1,37 @@
+#include <mcu_bridge_cfg.h>
+#ifdef MCU_BRIDGE_CFG_GPIO_DRIVER_ENABLED
+
 #include <stdbool.h>
 #include <mcu_gpio_bridge.h>
-#ifdef MCU_CFG_GPIO_DRIVER_ENABLED
 
-#if !defined(MCU_CFG_GPIO_MAX_PORTS_AVAILABLE)
-#error "MCU_CFG_GPIO_MAX_PORTS_AVAILABLE is not defined in mcu_cfg.h"
+#if !defined(MCU_BRIDGE_CFG_GPIO_MAX_PORTS_AVAILABLE)
+#error "MCU_BRIDGE_CFG_GPIO_MAX_PORTS_AVAILABLE is not defined in mcu_bridge_cfg.h"
 #endif
 
-#if !defined(MCU_CFG_GPIO_MAX_PINS_AVAILABLE)
-#error "MCU_CFG_GPIO_MAX_PINS_AVAILABLE is not defined in mcu_cfg.h"
+#if !defined(MCU_BRIDGE_CFG_GPIO_MAX_PINS_PER_PORT)
+#error "MCU_BRIDGE_CFG_GPIO_MAX_PINS_PER_PORT is not defined in mcu_bridge_cfg.h"
 #endif
 
-#if !defined(MCU_CFG_GPIO_MAX_PINS_TO_USE)
-#error "MCU_CFG_GPIO_MAX_PINS_TO_USE is not defined in mcu_cfg.h"
+#if !defined(MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE)
+#error "MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE is not defined in mcu_bridge_cfg.h"
 #endif
 
-#if(MCU_CFG_GPIO_MAX_PORTS_AVAILABLE <= 0U)
-#error "MCU_CFG_GPIO_MAX_PORTS_AVAILABLE should be greater than 0"
+#if(MCU_BRIDGE_CFG_GPIO_MAX_PORTS_AVAILABLE <= 0U)
+#error "MCU_BRIDGE_CFG_GPIO_MAX_PORTS_AVAILABLE should be greater than 0"
 #endif
 
-#if(MCU_CFG_GPIO_MAX_PINS_AVAILABLE <= 0U)
-#error "MCU_CFG_GPIO_MAX_PINS_AVAILABLE should be greater than 0"
+#if(MCU_BRIDGE_CFG_GPIO_MAX_PINS_PER_PORT <= 0U)
+#error "MCU_BRIDGE_CFG_GPIO_MAX_PINS_PER_PORT should be greater than 0"
 #endif
 
-#if(MCU_CFG_GPIO_MAX_PINS_TO_USE <= 0U)
-#error "MCU_CFG_GPIO_MAX_PINS_TO_USE should be greater than 0"
+#if(MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE <= 0U)
+#error "MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE should be greater than 0"
 #endif
 
-#if(MCU_CFG_GPIO_MAX_PINS_TO_USE >= MCU_CFG_GPIO_MAX_PINS_AVAILABLE)
-#error "MCU_CFG_GPIO_MAX_PINS_TO_USE should be less than MCU_CFG_GPIO_MAX_PINS_AVAILABLE"
+#if(MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE > \
+    (MCU_BRIDGE_CFG_GPIO_MAX_PORTS_AVAILABLE * MCU_BRIDGE_CFG_GPIO_MAX_PINS_PER_PORT))
+#error \
+    "MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE should be less than MCU_BRIDGE_CFG_GPIO_MAX_PORTS_AVAILABLE * MCU_BRIDGE_CFG_GPIO_MAX_PINS_PER_PORT"
 #endif
 
 // +--------------------------------------------------------------------------+
@@ -235,14 +239,14 @@ static status_t mcu_gpio_config_check(mcu_gpio_config_t* p_config)
 
     /* Check if port value in p_config->pin is valid. */
     if(status == STATUS_SUCCESS) {
-        if(MCU_GPIO_GET_PORT(p_config->pin) >= MCU_CFG_GPIO_MAX_PORTS_AVAILABLE) {
+        if(MCU_GPIO_GET_PORT(p_config->pin) >= MCU_BRIDGE_CFG_GPIO_MAX_PORTS_AVAILABLE) {
             status = STATUS_INVALID_PARAMS;
         }
     }
 
     /* Check if pin value in p_config->pin is valid. */
     if(status == STATUS_SUCCESS) {
-        if(MCU_GPIO_GET_PIN(p_config->pin) >= MCU_CFG_GPIO_MAX_PINS_AVAILABLE) {
+        if(MCU_GPIO_GET_PIN(p_config->pin) >= MCU_BRIDGE_CFG_GPIO_MAX_PINS_PER_PORT) {
             status = STATUS_INVALID_PARAMS;
         }
     }
@@ -290,5 +294,5 @@ static status_t mcu_gpio_config_check(mcu_gpio_config_t* p_config)
 // +--------------------------------------------------------------------------+
 
 #else
-#pragma message "GPIO driver is disabled in mcu_cfg.h"
-#endif /* MCU_CFG_GPIO_DRIVER_ENABLED */
+#pragma message "GPIO driver is disabled in mcu_bridge_cfg.h"
+#endif /* MCU_BRIDGE_CFG_GPIO_DRIVER_ENABLED */

@@ -209,7 +209,7 @@ extern "C" {
  * MB_BIT_UINT16_ARRAY_READ_BIT(my_bit_array, 10);
  * \endcode
  */
-#define MB_BIT_UINT16_ARRAY_READ_BIT(arr, index) (((arr)[(index) / 16U] >> ((index) % 8U)) & 16U)
+#define MB_BIT_UINT16_ARRAY_READ_BIT(arr, index) (((arr)[(index) / 16U] >> ((index) % 16U)) & 1U)
 
 /**
  * \brief Calculate total size of uint32_t bit array
@@ -230,7 +230,7 @@ extern "C" {
  * MB_BIT_UINT32_ARRAY_SET_BIT(my_bit_array, 10);
  * \endcode
  */
-#define MB_BIT_UINT32_ARRAY_SET_BIT(arr, index) ((arr)[(index) / 16U] |= (1U << ((index) % 16)))
+#define MB_BIT_UINT32_ARRAY_SET_BIT(arr, index) ((arr)[(index) / 32U] |= (1U << ((index) % 32)))
 
 /**
  * \brief Clear specific bit in uint32_t bit array
@@ -241,7 +241,7 @@ extern "C" {
  * MB_BIT_UINT32_ARRAY_CLEAR_BIT(my_bit_array, 10);
  * \endcode
  */
-#define MB_BIT_UINT32_ARRAY_CLEAR_BIT(arr, index) ((arr)[(index) / 16U] &= ~(1U << ((index) % 16)))
+#define MB_BIT_UINT32_ARRAY_CLEAR_BIT(arr, index) ((arr)[(index) / 32U] &= ~(1U << ((index) % 32)))
 
 /**
  * \brief Toggle specific bit in uint32_t bit array
@@ -252,7 +252,7 @@ extern "C" {
  * MB_BIT_UINT32_ARRAY_TOGGLE_BIT(my_bit_array, 10);
  * \endcode
  */
-#define MB_BIT_UINT32_ARRAY_TOGGLE_BIT(arr, index) ((arr)[(index) / 16U] ^= (1U << ((index) % 16)))
+#define MB_BIT_UINT32_ARRAY_TOGGLE_BIT(arr, index) ((arr)[(index) / 32U] ^= (1U << ((index) % 32)))
 
 /**
  * \brief Read specific bit in uint32_t bit array
@@ -263,7 +263,7 @@ extern "C" {
  * MB_BIT_UINT32_ARRAY_READ_BIT(my_bit_array, 10);
  * \endcode
  */
-#define MB_BIT_UINT32_ARRAY_READ_BIT(arr, index) (((arr)[(index) / 16U] >> ((index) % 8U)) & 16U)
+#define MB_BIT_UINT32_ARRAY_READ_BIT(arr, index) (((arr)[(index) / 32U] >> ((index) % 32U)) & 1U)
 
 // +--------------------------------------------------------------------------+
 // |                                                                          |

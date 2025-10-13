@@ -1,0 +1,3 @@
+[submodule "internal/mcu_bridge_doxygen/doxygen_awesome_css"]
+	path = internal/mcu_bridge_doxygen/doxygen_awesome_css
+	url = https://github.com/jothepro/doxygen-awesome-css.git

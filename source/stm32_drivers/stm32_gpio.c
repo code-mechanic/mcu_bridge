@@ -1,7 +1,8 @@
-#include <mcu_gpio_bridge.h>
-#ifdef MCU_CFG_GPIO_DRIVER_ENABLED
+#include <mcu_bridge_cfg.h>
+#ifdef MCU_BRIDGE_CFG_GPIO_DRIVER_ENABLED
 
-#include <utils.h>
+#include <mcu_gpio_bridge.h>
+#include <common/utils.h>
 /* STM32 MCU header. Macro will be created as a part of CMakeLists.txt */
 #include STM32_CMSIS_DEVICE_HEADER
 #include STM32_HAL_GPIO_HEADER
@@ -23,7 +24,7 @@
 
 typedef struct stm32_gpio_ctx_t_ {
     GPIO_TypeDef*    port; /**< GPIO Port */
-    GPIO_InitTypeDef init; /**< GPIO Init structure */
+    GPIO_InitTypeDef config; /**< GPIO Init structure */
 } stm32_gpio_ctx_t;
 
 // +--------------------------------------------------------------------------+
@@ -38,6 +39,7 @@ static void                 stm32_gpio_clk_enable(GPIO_TypeDef* p_port);
 static uint32_t             stm32_gpio_get_mode(mcu_gpio_pin_dir_t pin_dir, mcu_gpio_intr_trig_type_t trig_type);
 static uint32_t             stm32_gpio_get_pull(mcu_gpio_pin_pull_t pull);
 static uint32_t             stm32_gpio_get_speed(mcu_gpio_pin_speed_t speed);
+static bool                 is_stm32_gpio_configured(uint32_t gpio_idx);
 
 // +--------------------------------------------------------------------------+
 // |                                                                          |
@@ -46,8 +48,8 @@ static uint32_t             stm32_gpio_get_speed(mcu_gpio_pin_speed_t speed);
 // |                                                                          |
 // +--------------------------------------------------------------------------+
 
-static stm32_gpio_ctx_t g_stm32_gpio_ctx[MCU_CFG_GPIO_MAX_PINS_TO_USE];
-static uint32_t         g_stm32_gpio_config_tracker[MB_BIT_UINT32_ARRAY_CALC_TOTAL_SIZE(MCU_CFG_GPIO_MAX_PINS_TO_USE)];
+static stm32_gpio_ctx_t g_stm32_gpio_ctx[MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE];
+static uint32_t g_stm32_gpio_config_tracker[MB_BIT_UINT32_ARRAY_CALC_TOTAL_SIZE(MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE)];
 
 // +--------------------------------------------------------------------------+
 // |                                                                          |
@@ -60,7 +62,7 @@ status_t mcu_gpio_bridge_init(void)
 {
     status_t status = STATUS_SUCCESS;
 
-    for(uint32_t gpio_idx = 0; gpio_idx < MCU_CFG_GPIO_MAX_PINS_TO_USE; gpio_idx++) {
+    for(uint32_t gpio_idx = 0; gpio_idx < MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE; gpio_idx++) {
         MB_ZERO_STRUCT(g_stm32_gpio_ctx[gpio_idx]);
         MB_BIT_UINT32_ARRAY_CLEAR_BIT(g_stm32_gpio_config_tracker, gpio_idx);
     }
@@ -87,17 +89,17 @@ status_t mcu_gpio_bridge_config(uint32_t gpio_idx, mcu_gpio_config_t* p_config)
 
     if(status == STATUS_SUCCESS) {
         stm32_gpio_clk_enable(g_stm32_gpio_ctx[gpio_idx].port);
-        g_stm32_gpio_ctx[gpio_idx].init.Pin   = MB_BIT_MASK(p_config->pin);
-        g_stm32_gpio_ctx[gpio_idx].init.Mode  = stm32_gpio_get_mode(p_config->pin_dir, p_config->ip_pin_trig_type);
-        g_stm32_gpio_ctx[gpio_idx].init.Pull  = stm32_gpio_get_pull(p_config->ip_pin_pull);
-        g_stm32_gpio_ctx[gpio_idx].init.Speed = stm32_gpio_get_speed(p_config->op_pin_speed);
+        g_stm32_gpio_ctx[gpio_idx].config.Pin   = MB_BIT_MASK(p_config->pin);
+        g_stm32_gpio_ctx[gpio_idx].config.Mode  = stm32_gpio_get_mode(p_config->pin_dir, p_config->ip_pin_trig_type);
+        g_stm32_gpio_ctx[gpio_idx].config.Pull  = stm32_gpio_get_pull(p_config->ip_pin_pull);
+        g_stm32_gpio_ctx[gpio_idx].config.Speed = stm32_gpio_get_speed(p_config->op_pin_speed);
 
         /* Alternate functions are expected to be set by user using callback, if required */
         if(p_config->config_callback) {
             p_config->config_callback();
         }
 
-        HAL_GPIO_Init(g_stm32_gpio_ctx[gpio_idx].port, &g_stm32_gpio_ctx[gpio_idx].init);
+        HAL_GPIO_Init(g_stm32_gpio_ctx[gpio_idx].port, &g_stm32_gpio_ctx[gpio_idx].config);
         MB_BIT_UINT32_ARRAY_SET_BIT(g_stm32_gpio_config_tracker, gpio_idx);
     }
 
@@ -110,7 +112,7 @@ status_t mcu_gpio_bridge_read(uint32_t gpio_idx, mcu_gpio_pin_val_t* p_val)
     GPIO_PinState      hal_pin_read_status;
     mcu_gpio_pin_val_t read_val;
 
-    if(!MB_BIT_UINT32_ARRAY_READ_BIT(g_stm32_gpio_config_tracker, gpio_idx)) {
+    if(!is_stm32_gpio_configured(gpio_idx)) {
         status = STATUS_MCU_GPIO_NOT_CONFIGURED;
     }
 
@@ -118,7 +120,7 @@ status_t mcu_gpio_bridge_read(uint32_t gpio_idx, mcu_gpio_pin_val_t* p_val)
         /* g_stm32_gpio_ctx[gpio_idx].port: User should properly initialize the port */
         /* g_stm32_gpio_ctx[gpio_idx].pin: HAL APIs has built in check for pins `IS_GPIO_PIN` */
 
-        hal_pin_read_status = HAL_GPIO_ReadPin(g_stm32_gpio_ctx[gpio_idx].port, g_stm32_gpio_ctx[gpio_idx].init.Pin);
+        hal_pin_read_status = HAL_GPIO_ReadPin(g_stm32_gpio_ctx[gpio_idx].port, g_stm32_gpio_ctx[gpio_idx].config.Pin);
         read_val            = (hal_pin_read_status == GPIO_PIN_SET) ? MCU_GPIO_PIN_VAL_HIGH : MCU_GPIO_PIN_VAL_LOW;
         *p_val              = read_val;
     }
@@ -129,24 +131,64 @@ status_t mcu_gpio_bridge_read(uint32_t gpio_idx, mcu_gpio_pin_val_t* p_val)
 status_t mcu_gpio_bridge_write(uint32_t gpio_idx, mcu_gpio_pin_val_t val)
 {
     status_t status = STATUS_SUCCESS;
+    GPIO_PinState hal_pin_write_val = (val == MCU_GPIO_PIN_VAL_HIGH) ? GPIO_PIN_SET : GPIO_PIN_RESET;
+    if(!is_stm32_gpio_configured(gpio_idx)) {
+        status = STATUS_MCU_GPIO_NOT_CONFIGURED;
+    }
+
+    if(status == STATUS_SUCCESS) {
+        /* g_stm32_gpio_ctx[gpio_idx].port: User should properly initialize the port */
+        /* g_stm32_gpio_ctx[gpio_idx].pin: HAL APIs has built in check for pins `IS_GPIO_PIN` */
+
+        HAL_GPIO_WritePin(g_stm32_gpio_ctx[gpio_idx].port, g_stm32_gpio_ctx[gpio_idx].config.Pin, hal_pin_write_val);
+    }
     return status;
 }
 
 status_t mcu_gpio_bridge_toggle(uint32_t gpio_idx)
 {
     status_t status = STATUS_SUCCESS;
+
+    if(!is_stm32_gpio_configured(gpio_idx)) {
+        status = STATUS_MCU_GPIO_NOT_CONFIGURED;
+    }
+
+    if(status == STATUS_SUCCESS) {
+        /* g_stm32_gpio_ctx[gpio_idx].port: User should properly initialize the port */
+        /* g_stm32_gpio_ctx[gpio_idx].pin: HAL APIs has built in check for pins `IS_GPIO_PIN` */
+
+        HAL_GPIO_TogglePin(g_stm32_gpio_ctx[gpio_idx].port, g_stm32_gpio_ctx[gpio_idx].config.Pin);
+    }
     return status;
 }
 
 status_t mcu_gpio_bridge_set_dir(uint32_t gpio_idx, mcu_gpio_pin_dir_t dir)
 {
     status_t status = STATUS_SUCCESS;
+
+    /* In the STM32 HAL there isn't a clean way to set just the pin direction.
+     * User's should instead set the pin direction using mcu_gpio_config()
+     */
+    status = STATUS_UNSUPPORTED_FEATURE;
+
     return status;
 }
 
 status_t mcu_gpio_bridge_get_dir(uint32_t gpio_idx, mcu_gpio_pin_dir_t* p_dir)
 {
     status_t status = STATUS_SUCCESS;
+
+    if(!is_stm32_gpio_configured(gpio_idx)) {
+        status = STATUS_MCU_GPIO_NOT_CONFIGURED;
+    }
+
+    if(status == STATUS_SUCCESS) {
+        if(g_stm32_gpio_ctx[gpio_idx].config.Mode == GPIO_MODE_OUTPUT_PP) {
+            *p_dir = MCU_GPIO_PIN_DIR_OUTPUT;
+        } else {
+            *p_dir = MCU_GPIO_PIN_DIR_INPUT;
+        }
+    }
     return status;
 }
 
@@ -209,6 +251,8 @@ static void stm32_gpio_clk_enable(GPIO_TypeDef* p_port)
         __HAL_RCC_GPIOF_CLK_ENABLE();
     } else if(GPIOG == p_port) {
         __HAL_RCC_GPIOG_CLK_ENABLE();
+    } else {
+        /* Port not supported */
     }
 }
 
@@ -281,6 +325,11 @@ static uint32_t stm32_gpio_get_speed(mcu_gpio_pin_speed_t speed)
     return stm32_speed;
 }
 
+static inline bool is_stm32_gpio_configured(uint32_t gpio_idx)
+{
+    return MB_BIT_UINT32_ARRAY_READ_BIT(g_stm32_gpio_config_tracker, gpio_idx);
+}
+
 // +--------------------------------------------------------------------------+
 // |                                                                          |
 // |                                 Private                                  |
@@ -288,4 +337,4 @@ static uint32_t stm32_gpio_get_speed(mcu_gpio_pin_speed_t speed)
 // |                                                                          |
 // +--------------------------------------------------------------------------+
 
-#endif /* MCU_CFG_GPIO_DRIVER_ENABLED */
+#endif /* MCU_BRIDGE_CFG_GPIO_DRIVER_ENABLED */

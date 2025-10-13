@@ -27,15 +27,20 @@ docker_stop:
 docker_interact: docker_start
 	@docker exec -it $(CONTAINER) /bin/bash
 
-# Check docker image and container
-.PHONY: docker_check
-docker_check:
+# Check docker image and container usage
+.PHONY: docker_check_usage
+docker_check_usage:
 	@echo "\e[36mIMAGE LIST:\e[0m"
 	@docker image ls
 	@echo "\e[36mCONTAINER LIST:\e[0m"
 	@docker container ls
 	@echo "\e[36mDISK USAGE:\e[0m"
 	@docker system df
+
+# Check docker is able to connect with gdb server
+.PHONY: docker_check_gdb
+docker_check_gdb:
+	@docker exec $(CONTAINER) nc -vz host.docker.internal 3333
 
 # Remove unwanted docker usage
 .PHONY: docker_prune

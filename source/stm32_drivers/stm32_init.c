@@ -1,9 +1,4 @@
 #include <mcu_bridge.h>
-#include <mcu_cfg.h>
-
-/* STM32 MCU header. Macro will be created as a part of CMakeLists.txt */
-#include STM32_HAL_HEADER
-#include <mcu_gpio.h>
 
 // +--------------------------------------------------------------------------+
 // |                                                                          |
@@ -26,7 +21,7 @@
 // |                                                                          |
 // +--------------------------------------------------------------------------+
 
-status_t mcu_bridge_drivers_init(void);
+static status_t mcu_bridge_drivers_init(void);
 
 // +--------------------------------------------------------------------------+
 // |                                                                          |
@@ -64,6 +59,13 @@ status_t mcu_bridge_init(mcu_bridge_init_param_t* p_init_param)
     return status;
 }
 
+void mcu_bridge_delay_ms(uint32_t delay_ms)
+{
+#ifdef STM32
+    HAL_Delay(delay_ms);
+#endif
+}
+
 // +--------------------------------------------------------------------------+
 // |                                                                          |
 // |                                 Private                                  |
@@ -71,15 +73,15 @@ status_t mcu_bridge_init(mcu_bridge_init_param_t* p_init_param)
 // |                                                                          |
 // +--------------------------------------------------------------------------+
 
-status_t mcu_bridge_drivers_init(void)
+static status_t mcu_bridge_drivers_init(void)
 {
     status_t status = STATUS_SUCCESS;
 
-#ifdef MCU_CFG_GPIO_DRIVER_ENABLED
+#ifdef MCU_BRIDGE_CFG_GPIO_DRIVER_ENABLED
     if(status == STATUS_SUCCESS) {
         status = mcu_gpio_init();
     }
-#endif /* MCU_CFG_GPIO_DRIVER_ENABLED */
+#endif /* MCU_BRIDGE_CFG_GPIO_DRIVER_ENABLED */
 
     return status;
 }
