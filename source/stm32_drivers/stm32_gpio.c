@@ -23,7 +23,7 @@
 // +--------------------------------------------------------------------------+
 
 typedef struct stm32_gpio_ctx_t_ {
-    GPIO_TypeDef*    port; /**< GPIO Port */
+    GPIO_TypeDef*    port;   /**< GPIO Port */
     GPIO_InitTypeDef config; /**< GPIO Init structure */
 } stm32_gpio_ctx_t;
 
@@ -130,7 +130,7 @@ status_t mcu_gpio_bridge_read(uint32_t gpio_idx, mcu_gpio_pin_val_t* p_val)
 
 status_t mcu_gpio_bridge_write(uint32_t gpio_idx, mcu_gpio_pin_val_t val)
 {
-    status_t status = STATUS_SUCCESS;
+    status_t      status            = STATUS_SUCCESS;
     GPIO_PinState hal_pin_write_val = (val == MCU_GPIO_PIN_VAL_HIGH) ? GPIO_PIN_SET : GPIO_PIN_RESET;
     if(!is_stm32_gpio_configured(gpio_idx)) {
         status = STATUS_MCU_GPIO_NOT_CONFIGURED;

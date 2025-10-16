@@ -59,6 +59,12 @@ status_t mcu_bridge_init(mcu_bridge_init_param_t* p_init_param)
     return status;
 }
 
+void mcu_bridge_status_error_handler(void)
+{
+    __disable_irq();
+    while(1) { };
+}
+
 void mcu_bridge_delay_ms(uint32_t delay_ms)
 {
 #ifdef STM32

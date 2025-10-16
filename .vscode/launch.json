@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "projectName": "MCU Bridge",
+    "configurations": [
+        {
+            "name": "stm32 gpio openocd",
+            "cwd": "${workspaceRoot}",
+            "executable": "./build/stm32/example/gpio/stm32_gpio.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "external",
+            "gdbTarget": "host.docker.internal:3333",
+            "device": "stm32g474re",
+            "interface": "swd",
+            "gdbPath": "/opt/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-gdb",
+            "runToEntryPoint": "main",
+            "showDevDebugOutput": "raw"
+        }
+    ]
+}

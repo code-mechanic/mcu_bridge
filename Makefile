@@ -82,3 +82,21 @@ include cmake/targets_docker.mk
 include cmake/targets_lint.mk
 include cmake/targets_docs.mk
 include cmake/targets_git.mk
+
+# ==============================================================================
+# Build mcu_bridge, for the platform defined by MCU_BRIDGE_HW and lint and generate docs
+# ==============================================================================
+.PHONY: mcu_bridge_all
+mcu_bridge_all:
+	$(MAKE) lint
+	$(MAKE) docs
+	$(MAKE) debug
+	$(MAKE) release
+
+# ==============================================================================
+# Clean the build and docs
+# ==============================================================================
+.PHONY: clean_all
+clean_all:
+	$(MAKE) clean
+	$(MAKE) docs-clean

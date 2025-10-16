@@ -39,4 +39,4 @@ This framework follows:
 
 ## Block Diagram
 
-TODO
+\image html mcu_bridge_block_diagram.jpg "Software block diagram"

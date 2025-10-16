@@ -103,13 +103,11 @@ status_t mcu_gpio_init(void)
     status_t status = STATUS_SUCCESS;
 
     if(g_mcu_gpio_obj.is_initialized == false) {
-        if(status == STATUS_FAILURE) {
-            status = mcu_gpio_bridge_init();
-            if(status == STATUS_FAILURE) {
-                g_mcu_gpio_obj.is_initialized = true;
-            } else {
-                status = STATUS_MCU_INIT_DRIVER_FAILURE;
-            }
+        status = mcu_gpio_bridge_init();
+        if(status == STATUS_SUCCESS) {
+            g_mcu_gpio_obj.is_initialized = true;
+        } else {
+            status = STATUS_MCU_INIT_DRIVER_FAILURE;
         }
     }
 
