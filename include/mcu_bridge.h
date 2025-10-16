@@ -69,6 +69,20 @@ typedef struct mcu_bridge_init_param_t_ {
 status_t mcu_bridge_init(mcu_bridge_init_param_t* p_init_param);
 
 /**
+ * \brief Status error handler for MCU Bridge.
+ *
+ * This function will be called when any of the MCU Bridge APIs return an error status.
+ * It will disable all interrupts and enter an infinite loop. This is useful for debugging
+ * purposes, as it allows the application to break into the debugger and inspect the
+ * state of the system when an error occurs.
+ *
+ * \note This function does not return, and will cause the application to hang if it is
+ * called. It is intended to be used as a last resort for debugging purposes, and
+ * should not be used in a production environment.
+ */
+void mcu_bridge_status_error_handler(void);
+
+/**
  * \brief Delay for a given number of milliseconds
  *
  * \param[in] delay_ms Number of milliseconds to delay

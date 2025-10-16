@@ -1,0 +1,94 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36" version="28.2.7">
+  <diagram name="Page-1" id="p0CUqI4pmBiBIl-awD8A">
+    <mxGraphModel dx="1359" dy="884" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="kJSDuF47Wy-MVC1defGd-1" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeWidth=3;shadow=1;fontFamily=Helvetica;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="170" y="210" width="700" height="430" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-2" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;MCU Bridge&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="190" y="290" width="570" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-3" value="&lt;span&gt;MCU Bridge driver&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;labelBackgroundColor=none;fontStyle=0;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="200" y="320" width="550" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-4" value="&lt;span&gt;STM32 Bridge driver&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;labelBackgroundColor=none;fontStyle=0;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="550" y="380" width="200" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-5" value="&lt;span&gt;TI &lt;br&gt;Bridge driver&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;labelBackgroundColor=none;fontStyle=0;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="436" y="380" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-6" value="&lt;span&gt;PIC&lt;br&gt;Bridge driver&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;labelBackgroundColor=none;fontStyle=0;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="318" y="380" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-7" value="&lt;span&gt;AVR&lt;br&gt;Bridge driver&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;labelBackgroundColor=none;fontStyle=0;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="200" y="380" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-8" value="Application" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;labelBackgroundColor=none;fontStyle=0;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="1">
+          <mxGeometry x="190" y="230" width="570" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-9" value="" style="group;shadow=1;fontFamily=Helvetica;rounded=0;glass=0;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="190" y="570" width="570" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-10" value="&lt;span&gt;MCU&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;labelBackgroundColor=none;fontStyle=0;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-9">
+          <mxGeometry width="570.0000000000001" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-11" value="AVR" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-9">
+          <mxGeometry x="60" y="15" width="50" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-12" value="PIC" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-9">
+          <mxGeometry x="170" y="15" width="50" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-13" value="TI" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-9">
+          <mxGeometry x="290" y="15" width="50" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-14" value="STM32" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-9">
+          <mxGeometry x="432" y="15" width="48" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-15" value="" style="group;shadow=1;fontFamily=Helvetica;fillColor=#FFCCCC;strokeColor=#ae4132;rounded=0;glass=0;" connectable="0" vertex="1" parent="1">
+          <mxGeometry x="190" y="440" width="570" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-16" value="&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;External&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;shadow=1;fontFamily=Helvetica;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-15">
+          <mxGeometry width="570" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-17" value="&lt;span&gt;STM32 HAL&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;labelBackgroundColor=none;fontStyle=0;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-15">
+          <mxGeometry x="358.51590106007063" y="25.714285714285715" width="90.63604240282685" height="34.28571428571429" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-18" value="&lt;span&gt;STM32 LL&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;labelBackgroundColor=none;fontStyle=0;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-15">
+          <mxGeometry x="469.2932862190813" y="25.714285714285715" width="90.63604240282685" height="34.28571428571429" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-19" value="&lt;span&gt;CMSIS&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=middle;align=center;labelBackgroundColor=none;fontStyle=0;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-15">
+          <mxGeometry x="358.51590106007063" y="77.14285714285714" width="201.41342756183747" height="34.28571428571429" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-20" value="&lt;font style=&quot;color: rgb(255, 0, 0);&quot;&gt;TO BE IMPLEMENT&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;textShadow=0;fontFamily=Helvetica;shadow=0;glass=0;fillColor=#FFCCCC;sketch=1;curveFitting=1;jiggle=2;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-15">
+          <mxGeometry x="16.113074204946997" y="25.714285714285715" width="322.26148409893995" height="84.85714285714286" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-21" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="770" y="290" width="80" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-22" value="Tools" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-21">
+          <mxGeometry width="80" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-23" value="Git" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-21">
+          <mxGeometry x="10" y="28.92857142857143" width="60" height="28.92857142857143" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-24" value="Cmake" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-21">
+          <mxGeometry x="10" y="67.5" width="60" height="28.92857142857143" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-25" value="CI/CD" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-21">
+          <mxGeometry x="10" y="106.07142857142857" width="60" height="28.92857142857143" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-26" value="Compiler&lt;div&gt;Toolchain&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-21">
+          <mxGeometry x="10" y="144.64285714285714" width="60" height="28.92857142857143" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-27" value="Doxygen" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-21">
+          <mxGeometry x="10" y="188.03571428571428" width="60" height="28.92857142857143" as="geometry" />
+        </mxCell>
+        <mxCell id="kJSDuF47Wy-MVC1defGd-28" value="Docker" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;shadow=1;glass=0;" vertex="1" parent="kJSDuF47Wy-MVC1defGd-21">
+          <mxGeometry x="10" y="231.42857142857144" width="60" height="28.92857142857143" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
