@@ -21,6 +21,12 @@ target_include_directories(mcu_headers
   INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
+if(${MCU_BRIDGE_HW} STREQUAL "pic")
+  target_include_directories(mcu_headers
+  INTERFACE ${MCU_BRIDGE_PATH}/config/${MCU_BRIDGE_HW}
+)
+endif()
+
 # propagate selected MCU_BRIDGE_HW to subdirectories
 string(TOUPPER "${MCU_BRIDGE_HW}" MCU_BRIDGE_HW_MACRO)
 add_compile_definitions(${MCU_BRIDGE_HW_MACRO})

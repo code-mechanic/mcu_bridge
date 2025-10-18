@@ -93,10 +93,15 @@ mcu_bridge_all:
 	$(MAKE) debug
 	$(MAKE) release
 
+.PHONY: sanity_build
+sanity_build:
+	$(MAKE) mcu_bridge_all MCU_BRIDGE_HW=pic MCU_BRIDGE_MCU=pic16f18857
+	$(MAKE) mcu_bridge_all MCU_BRIDGE_HW=stm32 MCU_BRIDGE_MCU=stm32g4xx MCU_BRIDGE_MCU_VERSION=stm32g474xx
+
 # ==============================================================================
 # Clean the build and docs
 # ==============================================================================
 .PHONY: clean_all
 clean_all:
-	$(MAKE) clean
-	$(MAKE) docs-clean
+	rm -rf build
+	rm -rf docs

@@ -9,6 +9,7 @@ include config/${MCU_BRIDGE_HW}/$(MCU_BRIDGE_HW)_build_config.mk
 
 # List of supported product by SDK
 MCU_BRIDGE_HW_SUPPORT_LIST += stm32
+MCU_BRIDGE_HW_SUPPORT_LIST += pic
 
 ifeq ($(shell uname), Linux)
   DOT := $(shell $(DOCKER) which dot)
