@@ -46,3 +46,15 @@ docker_check_gdb:
 .PHONY: docker_prune
 docker_prune:
 	@docker system prune -a -f
+
+#===============================================================================
+# PIC MCU related targets
+#===============================================================================
+.PHONY: pic_xc8_list_mcu
+pic_xc8_list_mcu:
+	@$(DOCKER) xc8 --chipinfo
+
+.PHONY: pic_xc8_docs
+pic_xc8_docs:
+	@if [ ! -d docs ]; then mkdir docs; fi
+	@docker cp $(CONTAINER):/opt/microchip/xc8/v2.50/docs ./docs/xc8_docs

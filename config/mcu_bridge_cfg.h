@@ -17,13 +17,13 @@
  * \def MCU_BRIDGE_CFG_GPIO_MAX_PORTS_AVAILABLE
  * \brief Number of GPIO ports available in the target platform.
  */
-#define MCU_BRIDGE_CFG_GPIO_MAX_PORTS_AVAILABLE                             (2U)
+#define MCU_BRIDGE_CFG_GPIO_MAX_PORTS_AVAILABLE                             (1U)
 
 /**
  * \def MCU_BRIDGE_CFG_GPIO_MAX_PINS_PER_PORT
  * \brief Number of GPIO pins per port available in the target platform.
  */
-#define MCU_BRIDGE_CFG_GPIO_MAX_PINS_PER_PORT                              (16U)
+#define MCU_BRIDGE_CFG_GPIO_MAX_PINS_PER_PORT                               (1U)
 
 /**
  * \def MCU_BRIDGE_CFG_GPIO_MAX_PINS_TO_USE

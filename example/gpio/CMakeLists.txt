@@ -1,4 +1,4 @@
-set(EXECUTABLE stm32_gpio)
+set(EXECUTABLE example_gpio)
 
 add_executable(${EXECUTABLE} main.c)
 
@@ -20,10 +20,12 @@ if(${MCU_BRIDGE_HW} STREQUAL "stm32")
     )
 endif()
 
-# This function converts a cmake target executable file, e.g elf file into a
-# format that can be flashed.
-add_custom_command(
-    TARGET ${EXECUTABLE}
-    POST_BUILD
-    COMMAND ${CMAKE_OBJCOPY} ARGS -O binary ${EXECUTABLE}.elf ${EXECUTABLE}.bin
-)
+if(NOT ${MCU_BRIDGE_HW} STREQUAL "pic")
+    # This function converts a cmake target executable file, e.g elf file into a
+    # format that can be flashed.
+    add_custom_command(
+        TARGET ${EXECUTABLE}
+        POST_BUILD
+        COMMAND ${CMAKE_OBJCOPY} ARGS -O binary ${EXECUTABLE}.elf ${EXECUTABLE}.bin
+    )
+endif()

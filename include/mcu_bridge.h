@@ -26,6 +26,11 @@ extern "C" {
 #include STM32_HAL_HEADER
 #endif
 
+#ifdef PIC_CONFIG_BITS_HEADER
+/* PIC confguration bits header. Macro will be created as a part of CMakeLists.txt */
+#include PIC_CONFIG_BITS_HEADER
+#endif
+
 #ifdef MCU_BRIDGE_CFG_GPIO_DRIVER_ENABLED
 #include <mcu_drivers/mcu_gpio.h>
 #endif
