@@ -76,3 +76,7 @@
 |                                                      |
 +------------------------------------------------------+
 ```
+
+## ELF format details
+
+\image html elf_format.png "ELF file format"
