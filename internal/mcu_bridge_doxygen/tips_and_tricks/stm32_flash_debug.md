@@ -128,7 +128,7 @@
 
 ## Flashing STM32 MCU
 
-There are many methods to flash STM32 MCU but here are the 5 ways to flash firmware onto STM32 using 3 different interfaces (stlink, jlink, uart bootloader)
+There are many methods to flash STM32 MCU but here the 5 ways to flash firmware onto STM32 using 3 different interfaces (stlink, jlink, uart bootloader)
 
 ### ST-LINK: STM32CubeProgrammer (gui)
 
@@ -211,20 +211,34 @@ uflash: $(BUILD_DIR)/$(TARGET).bin
 
 ### MCU Debuggers Overview
 
-| **Debugger (HW Probe)**                             | **Host-side Software/IDE/Tools**                                                             | **MCU/SoC Companies Supported**                                         | **Cost**                                                    |
-| --------------------------------------------------- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------- |
-| **ST-LINK / ST-LINK V3**                            | STM32CubeIDE, STM32CubeProgrammer, OpenOCD, stlink-tools, GDB                                | STMicroelectronics (STM32, STM8)                                        | **Free** (on Nucleo/Discovery boards) / Low-cost standalone |
-| **J-Link (Segger)**                                 | J-Link Software (GDB Server, J-Flash), IDEs (Keil, IAR, Eclipse, VS Code), OpenOCD (partial) | Multi-vendor: ST, NXP, Renesas, TI, Nordic, Microchip, SiLabs, etc.     | **Paid** (Edu version free for hobby use)                   |
-| **CMSIS-DAP / DAPLink** (ARM mbed, LPC-Link2, etc.) | pyOCD, Keil µVision (free edition), OpenOCD, GDB                                             | ARM Cortex-M MCUs (NXP, ST, TI, Microchip SAM, etc.)                    | **Free** (on dev boards)                                    |
-| **TI XDS110 / XDS200 / XDS560**                     | Code Composer Studio (CCS), OpenOCD (partial)                                                | Texas Instruments (MSP430, Tiva, C2000, Sitara, etc.)                   | **Paid** (some XDS110 on LaunchPads free)                   |
-| **PEMicro Multilink / Cyclone**                     | PEmicro tools, GDB server, IAR, Keil                                                         | NXP (Kinetis, ColdFire, PowerPC), ST, Renesas, etc.                     | **Paid**                                                    |
-| **Lauterbach TRACE32**                              | TRACE32 PowerView software                                                                   | ARM (Cortex-M/A/R), RISC-V, Infineon, NXP, Renesas, TI, ST, many others | **Paid (very expensive)**                                   |
-| **Microchip PICkit / ICD4**                         | MPLAB X IDE                                                                                  | Microchip (PIC, dsPIC, AVR, SAM)                                        | **Paid** (low-cost)                                         |
-| **Atmel-ICE**                                       | Microchip Studio (free), OpenOCD, GDB                                                        | Microchip/Atmel (AVR, SAM ARM Cortex-M)                                 | **Paid**                                                    |
-| **NXP LinkServer (LPC-Link2, MCU-Link)**            | MCUXpresso IDE, pyOCD, GDB                                                                   | NXP (LPC, i.MX RT, Kinetis)                                             | **Free** (bundled with boards) / Low-cost standalone        |
-| **SiLabs USB Debug Adapter / WSTK**                 | Simplicity Studio IDE                                                                        | Silicon Labs (EFM32, EFR32)                                             | **Free** (included in kits) / Paid standalone               |
-| **RISC-V Probes (SiFive, OpenOCD-compatible)**      | OpenOCD, GDB, Freedom Studio, VS Code                                                        | RISC-V based SoCs (SiFive, Microchip PolarFire, etc.)                   | **Free** (dev boards)                                       |
-| **FTDI-based Adapters (Olimex ARM-USB-TINY, etc.)** | OpenOCD, GDB                                                                                 | Generic ARM Cortex-M, RISC-V (depends on config)                        | **Low-cost / Paid**                                         |
+Typical setup for Flashing and Debugging.
+```
+┌────────────┐             ┌────────────┐            ┌────────────┐
+│     PC     │             │            │            │            │
+│            │     USB     │  Debugger  │ SWD / JTAG │  Embedded  │
+│ Debugging  ├─────────────┤   probe    ├────────────┤   target   |
+│ Software   │             │            │            │            │
+│            │             │            │            │            │
+└────────────┘             └────────────┘            └────────────┘
+```
+(or)
+\image html gdb_openocd_jtag_target.jpg "Debugging setup for GDB + OpenOCD"
+
+| **Debugger (HW Probe)**                             | **Host-side Software**                                                                | **Target-Side Protocol / Interface**                                            |  **MCU / SoC Companies Supported**                                       |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |  ----------------------------------------------------------------------- |
+| **ST-LINK / ST-LINK V3**                            | STM32CubeIDE, STM32CubeProgrammer, OpenOCD, stlink-tools, J-Link software, GDB        | **SWD / JTAG (for STM32)**, **SWIM (for STM8)**                                 |  STMicroelectronics (STM32, STM8)                                        |
+| **J-Link (Segger)**                                 | J-Link Software (GDB Server, J-Flash), Keil, IAR, Eclipse, VS Code, OpenOCD (partial) | **SWD**, **JTAG**, **cJTAG**, **SWO**, **ETM (trace)**                          |  Multi-vendor: ST, NXP, Renesas, TI, Nordic, Microchip, SiLabs, etc.     |
+| **CMSIS-DAP / DAPLink** (ARM mbed, LPC-Link2, etc.) | pyOCD, Keil µVision, OpenOCD, GDB                                                     | **SWD**, optional **JTAG**, **SWO (trace)**                                     |  ARM Cortex-M MCUs (NXP, ST, TI, Microchip SAM, etc.)                    |
+| **TI XDS110 / XDS200 / XDS560**                     | Code Composer Studio (CCS), OpenOCD (partial)                                         | **JTAG**, **cJTAG**, **SBW (Spy-Bi-Wire)** (for MSP430)                         |  Texas Instruments (MSP430, Tiva, C2000, Sitara, etc.)                   |
+| **PEMicro Multilink / Cyclone**                     | PEmicro tools, GDB server, IAR, Keil                                                  | **JTAG**, **SWD**, **BDM** (for older Freescale/NXP)                            |  NXP (Kinetis, ColdFire, PowerPC), ST, Renesas, etc.                     |
+| **Lauterbach TRACE32**                              | TRACE32 PowerView software                                                            | **JTAG**, **SWD**, **cJTAG**, **Nexus / Aurora (trace)**, **ETM**               |  ARM (Cortex-M/A/R), RISC-V, Infineon, NXP, Renesas, TI, ST, many others |
+| **Microchip PICkit / ICD4**                         | MPLAB X IDE                                                                           | **ICSP (PIC/dsPIC)**, **JTAG / SWD (for ARM SAM)**                              |  Microchip (PIC, dsPIC, AVR, SAM)                                        |
+| **Atmel-ICE**                                       | Microchip Studio, OpenOCD, GDB                                                        | **UPDI / PDI / JTAG (AVR)**, **SWD / JTAG (SAM ARM)**                           |  Microchip/Atmel (AVR, SAM ARM Cortex-M)                                 |
+| **NXP LinkServer (LPC-Link2, MCU-Link)**            | MCUXpresso IDE, pyOCD, GDB                                                            | **SWD**, **JTAG**, optional **SWO (trace)**                                     |  NXP (LPC, i.MX RT, Kinetis)                                             |
+| **SiLabs USB Debug Adapter / WSTK**                 | Simplicity Studio IDE                                                                 | **SWD**, optional **SWO / ETM trace**                                           |  Silicon Labs (EFM32, EFR32)                                             |
+| **RISC-V Probes (SiFive, OpenOCD-compatible)**      | OpenOCD, GDB, Freedom Studio, VS Code                                                 | **JTAG**, **cJTAG**, some with **SWD-like RISC-V Debug Transport Module (DTM)** |  RISC-V SoCs (SiFive, Microchip PolarFire, etc.)                         |
+| **FTDI-based Adapters (Olimex ARM-USB-TINY, etc.)** | OpenOCD, GDB                                                                          | **JTAG**, **SWD** (via bit-banging MPSSE interface), optional **SWO**           |  Generic ARM Cortex-M, RISC-V (configurable)                             |
+
 
 ### Stlink and Jlink debugger
 
